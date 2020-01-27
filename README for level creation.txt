@@ -1,0 +1,1 @@
+-Level geometry (walls, ceilings, floors) MUST be set on the layer "Level" for the player control script to properly detect if the player is on or off the ground
