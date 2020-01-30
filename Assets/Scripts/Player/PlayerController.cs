@@ -12,7 +12,10 @@ public class PlayerController : MonoBehaviour
     float quickStopSpeed = 0.5f; //How fast the player stops when holding both left & right on the ground
     float slowStopSpeed = 0.1f; //How fast the player stops holding no keys on the ground
     float verySlowStopSpeed = 0.06f; //how fast the player stops holding no keys in the air
+    float jumpSpeed = 6f; //Vertical speed applied when jumping;
 
+    LayerMask ground;
+    RaycastHit2D groundCheck;
     public bool onGround;
 
     void Awake()
@@ -23,16 +26,16 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        LayerMask ground = LayerMask.GetMask("Level");
+        ground = LayerMask.GetMask("Level");
 
         //Cast a ray downward
-        RaycastHit2D groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.7f, ground);
+        groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.53f, ground);
 
         if (groundCheck.collider != null) //the player is on the ground
         {
@@ -47,7 +50,12 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) //jump pressed
             {
-                rb2D.velocity = new Vector2(rb2D.velocity.x, 5f);
+                rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
+            }
+
+            if ((rb2D.velocity.x == 0) && Input.GetKey("down") || Input.GetKey("s")) //crouch pressed when stopped
+            {
+                Debug.Log("Crouch here");
             }
 
             if ((Input.GetKey("left") || Input.GetKey("a")) && //both left and right are pressed
@@ -171,6 +179,78 @@ public class PlayerController : MonoBehaviour
 
                 rb2D.velocity = new Vector2(temp, rb2D.velocity.y);
             }
+        }
+    }
+
+    public void club(bool strong) //player used a clubs suit card
+    {
+        if (strong == true)
+            Debug.Log("Used a club");
+        else
+            Debug.Log("Weak club");
+    }
+
+    public void diamond(bool strong) //diamonds suit card
+    {
+        if (strong == true)
+            Debug.Log("Used a diamond");
+        else
+            Debug.Log("Weak diamond");
+    }
+
+    public void heart(bool strong) //hearts suit card
+    {
+        if (strong == true)
+            Debug.Log("Used a heart");
+        else
+            Debug.Log("Weak heart");
+    }
+
+    public void spade(bool strong) //spades suit card
+    {
+        if (strong == true)
+            Debug.Log("Used a spade");
+        else
+            Debug.Log("Weak spade");
+    }
+
+    public void joker() //player is out of cards, gets a random effect
+    {
+        Debug.Log("Joker card");
+
+        //random number between 8 choices
+        //1 - 4 being clubs - spades, with 5 -8 being weaker versions of the previous
+        int choice = Random.Range(1, 9);
+
+        switch (choice)
+        {
+            case 1:
+                club(true);
+                break;
+            case 2:
+                diamond(true);
+                break;
+            case 3:
+                heart(true);
+                break;
+            case 4:
+                spade(true);
+                break;
+            case 5:
+                club(false);
+                break;
+            case 6:
+                diamond(false);
+                break;
+            case 7:
+                heart(false);
+                break;
+            case 8:
+                spade(false);
+                break;
+            default:
+                Debug.Log("This isn't supposed to happen");
+                break;
         }
     }
 }
