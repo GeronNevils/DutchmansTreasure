@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb2D;
 
+    bool dead = false;
+
     float maxSpeed = 4f; //The player's max horizontal speed
     float groundAcceleration = 0.2f; //the player's horizontal acceleration on the ground
     float airAcceleration = 0.17f; //the player's horizontal acceleration on the ground
@@ -13,6 +15,8 @@ public class PlayerController : MonoBehaviour
     float slowStopSpeed = 0.1f; //How fast the player stops holding no keys on the ground
     float verySlowStopSpeed = 0.06f; //how fast the player stops holding no keys in the air
     float jumpSpeed = 6f; //Vertical speed applied when jumping;
+
+    GameObject respawnPoint; //The current spot where the player will respawn
 
     LayerMask ground;
     RaycastHit2D groundCheck;
@@ -29,9 +33,26 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D objCollider) //collision with object
+    {
+        if (objCollider.gameObject.tag == "Respawn")
+        {
+            respawnPoint = objCollider.gameObject;
+        }
+    }
+
+    void respawn(float posX, float posY)
+    {
+        dead = false;
+        transform.SetPositionAndRotation(new Vector2(posX, posY), new Quaternion(0, 0, 0, 0));
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (dead) //if the player is dead, then respawn
+            respawn(respawnPoint.transform.position.x, respawnPoint.transform.position.y);
+
         ground = LayerMask.GetMask("Level");
 
         //Cast a ray downward
