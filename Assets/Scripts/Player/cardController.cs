@@ -41,18 +41,20 @@ public class cardController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void discard()
     {
-        if (Input.GetKeyDown("l") && deck.Count > 0) //discard cards if any are left
-        { //add NumPad 1 input
+        if (deck.Count > 0)
+        {
             Debug.Log(deck[0].num + " of " + deck[0].suit + " discarded");
             deck.RemoveAt(0);
         }
+    }
 
-        if (Input.GetKeyDown("k") && deck.Count > 0) //use a card
-        { //add NumPad 3 input
-
+    // Update is called once per frame
+    void Update()
+    {
+        if ((Input.GetKeyDown("k") || Input.GetKeyDown("3")) && deck.Count > 0 && playerCon.cardActive == false) //use a card
+        {
             //could also add something to store coordinates where cards were used here,
             //to use as a graphic representation of the run at the end of the level.
 
@@ -75,7 +77,7 @@ public class cardController : MonoBehaviour
 
             deck.RemoveAt(0); //get rid of the used card
         }
-        else if (Input.GetKeyDown("k") && deck.Count < 1) //use a joker
+        else if (Input.GetKeyDown("k") && deck.Count < 1 && playerCon.cardActive == false) //use a joker
         { //add NumPad 3 input
             playerCon.joker();
         }
