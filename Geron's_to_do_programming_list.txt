@@ -1,0 +1,27 @@
+-Figure out how to add numPad controls in Unity
+
+-Add in character/enemy/prop sprites
+
+-Add animators to things that need them
+
+-Get the player to rotate depending on the direction they are traveling, and to throw diamonds based on direction
+
+-Add weak diamond spinning :)
+
+-Start planning/designing levels
+
+-----------------------------------------------------------
+Done:
+
+-Implement functioning card effects for diamond, and spade
+
+-Set up card system.
+
+-Create character controls and physics.
+
+-Implement room system with start/exit points.
+	-Also made a template room
+	-With test enemy and killzone prefabs
+
+-Set up character death and respawning
+
