@@ -1,14 +1,21 @@
+-Find out if game looks better with all the sprites at default size rather than being scaled down
+	-Re-make room prefab with sprites in tile draw mode to use textures, re-size if needed^
+
 -Figure out how to add numPad controls in Unity
 
--Add in character/enemy/prop sprites
+-Add a button for opening treasure chests
 
--Add animators to things that need them
+-Set up mimic chests and death sequence
 
--Get the player to rotate depending on the direction they are traveling, and to throw diamonds based on direction
+-Request treasure and card pickup images
 
--Add weak diamond spinning :)
+-Add in remaining character/enemy/prop sprites
+
+-Add animators to enemies
 
 -Start planning/designing levels
+
+-Start adding UI
 
 -----------------------------------------------------------
 Done:
@@ -24,4 +31,10 @@ Done:
 	-With test enemy and killzone prefabs
 
 -Set up character death and respawning
+
+-Get the player to rotate depending on the direction they are traveling, and to throw diamonds based on direction
+
+-Add diamond spinning :)
+
+-Set up character animator
 

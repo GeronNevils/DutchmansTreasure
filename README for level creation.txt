@@ -5,6 +5,7 @@
 	-The "EscapeBlocker" turns solid when the player first touches the entrance.
 
 -Enemies must be use the "Enemy" tag to properly interact with the player and cards
+	-And killzones must use the "Killzone" tag
 
 -Chains (and other destructible objects) must use the "Obstacle" tag
 

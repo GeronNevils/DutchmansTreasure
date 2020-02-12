@@ -53,33 +53,36 @@ public class cardController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown("k") || Input.GetKeyDown("3")) && deck.Count > 0 && playerCon.cardActive == false) //use a card
+        if (playerCon.dead == false)
         {
-            //could also add something to store coordinates where cards were used here,
-            //to use as a graphic representation of the run at the end of the level.
+            if ((Input.GetKeyDown("k") || Input.GetKeyDown("3")) && deck.Count > 0 && playerCon.cardActive == false) //use a card
+            {
+                //could also add something to store coordinates where cards were used here,
+                //to use as a graphic representation of the run at the end of the level.
 
-            if (deck[0].suit == "Clubs")
-            {
-                playerCon.club(true);
-            }
-            else if (deck[0].suit == "Diamonds")
-            {
-                playerCon.diamond(true);
-            }
-            else if (deck[0].suit == "Hearts")
-            {
-                playerCon.heart(true);
-            }
-            else if (deck[0].suit == "Spades")
-            {
-                playerCon.spade(true);
-            }
+                if (deck[0].suit == "Clubs")
+                {
+                    playerCon.club(true);
+                }
+                else if (deck[0].suit == "Diamonds")
+                {
+                    playerCon.diamond(true);
+                }
+                else if (deck[0].suit == "Hearts")
+                {
+                    playerCon.heart(true);
+                }
+                else if (deck[0].suit == "Spades")
+                {
+                    playerCon.spade(true);
+                }
 
-            deck.RemoveAt(0); //get rid of the used card
-        }
-        else if (Input.GetKeyDown("k") && deck.Count < 1 && playerCon.cardActive == false) //use a joker
-        { //add NumPad 3 input
-            playerCon.joker();
+                deck.RemoveAt(0); //get rid of the used card
+            }
+            else if (Input.GetKeyDown("k") && deck.Count < 1 && playerCon.cardActive == false) //use a joker
+            { //add NumPad 3 input
+                playerCon.joker();
+            }
         }
     }
 }

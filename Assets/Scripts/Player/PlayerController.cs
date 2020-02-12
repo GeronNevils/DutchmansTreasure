@@ -6,8 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb2D;
     cardController cardCon;
+    SpriteRenderer sr;
+    Animator anim;
 
-    bool dead = false;
+    public bool dead = false;
 
     float maxSpeed = 4f; //The player's max horizontal speed
     float groundAcceleration = 0.2f; //the player's horizontal acceleration on the ground
@@ -16,6 +18,8 @@ public class PlayerController : MonoBehaviour
     float slowStopSpeed = 0.1f; //How fast the player stops holding no keys on the ground
     float verySlowStopSpeed = 0.06f; //how fast the player stops holding no keys in the air
     float jumpSpeed = 5.5f; //Vertical speed applied when jumping;
+
+    int respawnDelay = 0; //The delay between death and respawn
 
     GameObject respawnPoint; //The current spot where the player will respawn
 
@@ -52,6 +56,8 @@ public class PlayerController : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         cardCon = GetComponent<cardController>();
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -62,24 +68,35 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D objCollider) //collision with object
     {
-        if (objCollider.gameObject.tag == "Respawn") //set current respawn point
+        if (!dead)
         {
-            respawnPoint = objCollider.gameObject;
+            if (objCollider.gameObject.tag == "Respawn") //set current respawn point
+            {
+                respawnPoint = objCollider.gameObject;
+            }
+            else if (objCollider.gameObject.tag == "Enemy" && shieldsUp == false && ridingClub == false) //hit enemy with no shield
+            {
+                setDead(); //die
+            }
+            else if (objCollider.gameObject.tag == "KillZone") //hit out-of-bounds
+            {
+                setDead(); //die
+            }
         }
-        else if (objCollider.gameObject.tag == "Enemy" && shieldsUp == false && ridingClub == false) //hit enemy with no shield
-        {
-            dead = true;
-        }
-        else if (objCollider.gameObject.tag == "KillZone")
-        {
-            effectCancel();
-            dead = true;
-        }
+    }
+
+    void setDead()
+    {
+        dead = true;
+        anim.SetBool("isDead", true);
+        effectCancel();
+        respawnDelay = 300;
     }
 
     void respawn(float posX, float posY) //respawn player at respawn point
     {
         dead = false;
+        anim.SetBool("isDead", false);
         transform.SetPositionAndRotation(new Vector2(posX, posY), new Quaternion(0, 0, 0, 0));
         rb2D.velocity = new Vector2(0f, 0f);
     }
@@ -108,9 +125,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dead) //if the player is dead, then respawn
+        if (dead && respawnDelay == 0) //if the player is dead and the delay is done, then respawn
             respawn(respawnPoint.transform.position.x, respawnPoint.transform.position.y);
         //Implement cooldown and death animation
+
+        if (respawnDelay > 0) //if delay is active, decrease time remaining
+            respawnDelay--;
 
         if (shieldTimeLeft > 0) //if shield is active, decrease time remaining
         {
@@ -135,15 +155,22 @@ public class PlayerController : MonoBehaviour
         ground = LayerMask.GetMask("Level");
 
         //Cast a ray downward
-        groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.53f, ground);
+        groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.81f, ground);
 
         if (groundCheck.collider != null) //the player is on the ground
         {
             onGround = true;
+            anim.SetBool("isGrounded", true);
         }
         else //the player is in the air
         {
             onGround = false;
+            anim.SetBool("isGrounded", false);
+        }
+
+        if (onGround && rb2D.velocity.y < -8 && !ridingClub) //hit ground too fast test
+        {
+            setDead(); //die
         }
 
         if ((Input.GetKeyDown("l") || Input.GetKeyDown("1")) && cardActive == true) //cancel current card effects
@@ -155,11 +182,48 @@ public class PlayerController : MonoBehaviour
             cardCon.discard();
         }
 
-        if (onGround && !ridingClub) //player is on the ground
+        if (dead == true) //player is dead
+        {
+            if (!onGround)
+            {
+                anim.SetBool("isGrounded", false);
+                transform.Rotate(0, 0, 500 * Time.deltaTime);
+            }
+            else
+            {
+                anim.SetBool("isGrounded", true);
+                if (rb2D.velocity.x == 0.0f)
+                    transform.SetPositionAndRotation(transform.position, new Quaternion(0, 0, 0, 0));
+            }
+
+            //stop very slowly
+            float temp = rb2D.velocity.x;
+            if (temp < 0)
+            {
+                temp += verySlowStopSpeed;
+                if (temp > 0)
+                    temp = 0;
+            }
+            else
+            {
+                temp -= verySlowStopSpeed;
+                if (temp < 0)
+                    temp = 0;
+            }
+
+            rb2D.velocity = new Vector2(temp, rb2D.velocity.y);
+
+            if (onGround && rb2D.velocity.y < 0.5f) //fell on the ground
+            {
+                rb2D.velocity = new Vector2(rb2D.velocity.x, (rb2D.velocity.y / 2) * -1);
+            }
+        }
+        else if (onGround && !ridingClub && !dead) //player is on the ground, and not dead
         {
             if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) //jump pressed
             {
                 rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
+                anim.SetBool("isGrounded", false);
             }
 
             if ((Input.GetKey("left") || Input.GetKey("a")) && //both left and right are pressed
@@ -221,8 +285,14 @@ public class PlayerController : MonoBehaviour
 
                 rb2D.velocity = new Vector2(temp, rb2D.velocity.y);
             }
+
+            //set direction to face
+            if (rb2D.velocity.x < 0) //traveling left
+                sr.flipX = true; //face left
+            else if (rb2D.velocity.x > 0) //traveling right
+                sr.flipX = false; //face right
         }
-        else if (!onGround && !ridingClub) //player is not on the ground, and is not on a club card
+        else if (!onGround && !ridingClub && !dead) //player is not on the ground, and is not on a club card
         {
             if ((Input.GetKey("left") || Input.GetKey("a")) && //both left and right are pressed
                 (Input.GetKey("right") || Input.GetKey("d")))
@@ -246,6 +316,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (Input.GetKey("left") || Input.GetKey("a")) //move left
             {
+                sr.flipX = true; //face left
+
                 float temp = rb2D.velocity.x;
                 temp -= airAcceleration;
 
@@ -256,6 +328,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (Input.GetKey("right") || Input.GetKey("d")) //move right
             {
+                sr.flipX = false; //face right
+
                 float temp = rb2D.velocity.x;
                 temp += airAcceleration;
 
@@ -284,7 +358,7 @@ public class PlayerController : MonoBehaviour
                 rb2D.velocity = new Vector2(temp, rb2D.velocity.y);
             }
         }
-        else if (ridingClub == true) //the player is riding the club card
+        else if (ridingClub == true && !dead) //the player is riding the club card
         {
             if (!onGround) //in the air
             {
@@ -309,6 +383,12 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
+        //set animation idle/not idle
+        if (rb2D.velocity.x == 0.0f)
+            anim.SetBool("isIdle", true);
+        else
+            anim.SetBool("isIdle", false);
     }
 
     public void club(bool strong) //player used a clubs suit card
@@ -330,18 +410,34 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Used a diamond");
             GameObject c = Instantiate(diamondCard, rb2D.transform.position, new Quaternion(0, 0, 0, 0));
-            c.GetComponent<Rigidbody2D>().velocity = new Vector2(5f, 0f); //change to depend on player direction
 
-            rb2D.velocity = new Vector2(rb2D.velocity.x - 5f, rb2D.velocity.y); //change to push player backwards
+            if (sr.flipX == false) //facing right
+            {
+                c.GetComponent<Rigidbody2D>().velocity = new Vector2(5f, 0f);
+                rb2D.velocity = new Vector2(rb2D.velocity.x - 5f, rb2D.velocity.y);
+            }
+            else //facing left
+            {
+                c.GetComponent<Rigidbody2D>().velocity = new Vector2(-5f, 0f);
+                rb2D.velocity = new Vector2(rb2D.velocity.x + 5f, rb2D.velocity.y);
+            }
         }
         else
         {
             Debug.Log("Weak diamond");
             GameObject c = Instantiate(diamondCard, rb2D.transform.position, new Quaternion(0, 0, 0, 0));
             c.GetComponent<Rigidbody2D>().gravityScale = 1;
-            c.GetComponent<Rigidbody2D>().velocity = new Vector2(3f, 7f); //change to depend on player direction
 
-            rb2D.velocity = new Vector2(rb2D.velocity.x - 5f, rb2D.velocity.y); //change as well
+            if (sr.flipX == false) //facing right
+            {
+                c.GetComponent<Rigidbody2D>().velocity = new Vector2(3f, 7f);
+                rb2D.velocity = new Vector2(rb2D.velocity.x - 5f, rb2D.velocity.y);
+            }
+            else //facing left
+            {
+                c.GetComponent<Rigidbody2D>().velocity = new Vector2(-3f, 7f);
+                rb2D.velocity = new Vector2(rb2D.velocity.x + 5f, rb2D.velocity.y);
+            }
         }
     }
 
@@ -393,7 +489,7 @@ public class PlayerController : MonoBehaviour
 
         //random number between 8 choices
         //1 - 4 being clubs - spades, with 5 -8 being weaker versions of the previous
-        int choice = Random.Range(1, 9);
+        int choice = Random.Range(1, 8);
 
         switch (choice)
         {
@@ -410,15 +506,12 @@ public class PlayerController : MonoBehaviour
                 spade(true);
                 break;
             case 5:
-                club(false);
-                break;
-            case 6:
                 diamond(false);
                 break;
-            case 7:
+            case 6:
                 heart(false);
                 break;
-            case 8:
+            case 7:
                 spade(false);
                 break;
             default:

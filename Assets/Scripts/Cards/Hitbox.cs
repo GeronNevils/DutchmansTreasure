@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
-    /*
-     * public Transform bulletPrefab;
-
-    void Start()
-    {
-        Transform bullet = Instantiate(bulletPrefab) as Transform;
-        Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
-    }
-     */
-
-
     //Manages the hitboxes for the diamond and club cards
 
     GameObject player;
@@ -45,7 +34,7 @@ public class Hitbox : MonoBehaviour
 
         if (collision.gameObject.layer == 8 && isDiamond == true && collision.gameObject.tag != "Diamond")
         {
-            Destroy(GetComponent<Rigidbody2D>()); //keep them from floating around
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; //keep them from floating around
             col.isTrigger = false; //make the card solid
         }
     }
@@ -57,5 +46,13 @@ public class Hitbox : MonoBehaviour
             lifespan--;
         else if (lifespan == 0)
             Destroy(gameObject);
+
+        if (isDiamond) //make card go spinny
+        {
+            if (GetComponent<Rigidbody2D>().velocity.x != 0.0f)
+            {
+                transform.Rotate(0, 0, 250 * Time.deltaTime);
+            }
+        }
     }
 }
