@@ -1,24 +1,40 @@
--Find out if game looks better with all the sprites at default size rather than being scaled down
-	-Re-make room prefab with sprites in tile draw mode to use textures, re-size if needed^
-
--Figure out how to add numPad controls in Unity
-
 -Add a button for opening treasure chests
 
 -Set up mimic chests and death sequence
 
--Request treasure and card pickup images
+-Set up normal chests, and treasure/pickup system
 
--Add in remaining character/enemy/prop sprites
-
--Add animators to enemies
+-Set up cannons, chains, kracken, and skulls
+	-Set up patrolling and rotating swords
 
 -Start planning/designing levels
 
--Start adding UI
+-Add cutscene to starting and ending game
+
+-Create images for controls menu
+
+-Crrate image for joker card in UI
+
+-Fix awkward menu button "hitboxes" with mouse (May just be a Unity problem)
 
 -----------------------------------------------------------
 Done:
+
+-Fix menu button bugs
+
+-Fix infinite death on sword hitbox bug
+
+-Fix spade and diamond bugs
+
+-Figure out how to add numPad controls in Unity
+
+-Add buttons for restarting (room and scene), and a quit button
+
+-Request treasure and card pickup images
+
+-Add UI
+
+-Set up animators for all enemy types
 
 -Implement functioning card effects for diamond, and spade
 
@@ -29,6 +45,7 @@ Done:
 -Implement room system with start/exit points.
 	-Also made a template room
 	-With test enemy and killzone prefabs
+	-Re-make room prefab with sprites in tile draw mode to use textures
 
 -Set up character death and respawning
 
@@ -37,4 +54,6 @@ Done:
 -Add diamond spinning :)
 
 -Set up character animator
+
+-Add in remaining character/enemy/prop sprites
 

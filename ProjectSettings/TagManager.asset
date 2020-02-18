@@ -8,6 +8,8 @@ TagManager:
   - Obstacle
   - Diamond
   - KillZone
+  - EnemyD
+  - UIcontrol
   layers:
   - Default
   - TransparentFX

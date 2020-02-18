@@ -18,12 +18,15 @@ public class cardController : MonoBehaviour
 {
     PlayerController playerCon;
 
+    GameUI controlFreeze;
+
     public List<Card> deck = new List<Card>();
     string[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
 
     void Awake()
     {
         playerCon = GetComponent<PlayerController>();
+        controlFreeze = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<GameUI>();
 
         for (int i = 1; i <= 13; i++)
         {
@@ -45,7 +48,6 @@ public class cardController : MonoBehaviour
     {
         if (deck.Count > 0)
         {
-            Debug.Log(deck[0].num + " of " + deck[0].suit + " discarded");
             deck.RemoveAt(0);
         }
     }
@@ -53,9 +55,9 @@ public class cardController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerCon.dead == false)
+        if (playerCon.dead == false && !controlFreeze.freeze)
         {
-            if ((Input.GetKeyDown("k") || Input.GetKeyDown("3")) && deck.Count > 0 && playerCon.cardActive == false) //use a card
+            if ((Input.GetKeyDown("k") || Input.GetKeyDown(KeyCode.Keypad3)) && deck.Count > 0 && playerCon.cardActive == false) //use a card
             {
                 //could also add something to store coordinates where cards were used here,
                 //to use as a graphic representation of the run at the end of the level.

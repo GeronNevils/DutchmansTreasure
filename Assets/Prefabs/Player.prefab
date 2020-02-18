@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228742e8efd6ab0488e54b7e5a67cae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dead: 0
   cardActive: 0
   clubCard: {fileID: 4376150004864055073, guid: b784c460a30f7344dbace16b1da48b11,
     type: 3}

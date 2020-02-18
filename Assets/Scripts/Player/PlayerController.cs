@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sr;
     Animator anim;
 
+    GameUI controlFreeze;
+
     public bool dead = false;
 
     float maxSpeed = 4f; //The player's max horizontal speed
@@ -24,7 +26,6 @@ public class PlayerController : MonoBehaviour
     GameObject respawnPoint; //The current spot where the player will respawn
 
     GameObject spawnCard; //GameObjects to keep track of when instantiating
-    GameObject spawnCardExtra;
     GameObject spawnHitbox;
     GameObject spawnHitboxExtra;
 
@@ -46,7 +47,6 @@ public class PlayerController : MonoBehaviour
 
     public GameObject spadeCard; //the spade card
     float spadeJumpSpeed = 8f; //Vertical speed from using a spade card (trampoline)
-    int cardVisualDuration = 0; //How long the trampoline will be visual
 
     LayerMask ground;
     RaycastHit2D groundCheck;
@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
         cardCon = GetComponent<cardController>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        controlFreeze = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<GameUI>();
     }
 
     // Start is called before the first frame update
@@ -74,7 +75,8 @@ public class PlayerController : MonoBehaviour
             {
                 respawnPoint = objCollider.gameObject;
             }
-            else if (objCollider.gameObject.tag == "Enemy" && shieldsUp == false && ridingClub == false) //hit enemy with no shield
+            else if ((objCollider.gameObject.tag == "EnemyD" || objCollider.gameObject.tag == "Enemy")
+                && shieldsUp == false && ridingClub == false) //hit enemy with no shield
             {
                 setDead(); //die
             }
@@ -96,6 +98,7 @@ public class PlayerController : MonoBehaviour
     void respawn(float posX, float posY) //respawn player at respawn point
     {
         dead = false;
+        effectCancel();
         anim.SetBool("isDead", false);
         transform.SetPositionAndRotation(new Vector2(posX, posY), new Quaternion(0, 0, 0, 0));
         rb2D.velocity = new Vector2(0f, 0f);
@@ -144,18 +147,13 @@ public class PlayerController : MonoBehaviour
             shieldTimeLeft--;
         }
 
-        if (cardVisualDuration > 0) //for keeping the spade card on screen
-            cardVisualDuration--;
-        else if (cardVisualDuration == 0)
-            Destroy(spawnCardExtra);
-
         if (groundTimer > 0)
             groundTimer--;
 
         ground = LayerMask.GetMask("Level");
 
         //Cast a ray downward
-        groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.81f, ground);
+        groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.85f, ground);
 
         if (groundCheck.collider != null) //the player is on the ground
         {
@@ -168,57 +166,62 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isGrounded", false);
         }
 
-        if (onGround && rb2D.velocity.y < -8 && !ridingClub) //hit ground too fast test
+        if (onGround && rb2D.velocity.y < -9f && !ridingClub) //hit ground too fast test
         {
             setDead(); //die
         }
 
-        if ((Input.GetKeyDown("l") || Input.GetKeyDown("1")) && cardActive == true) //cancel current card effects
+        if (Input.GetKeyDown("r") && !controlFreeze.freeze) //input respawn
+        {
+            respawn(respawnPoint.transform.position.x, respawnPoint.transform.position.y);
+        }
+
+        if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad1)) && cardActive == true) //cancel current card effects
         {
             effectCancel();
         }
-        else if ((Input.GetKeyDown("l") || Input.GetKeyDown("1")) && cardActive == false) //discard card
+        else if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad1)) && cardActive == false && !controlFreeze.freeze) //discard card
         {
             cardCon.discard();
         }
 
         if (dead == true) //player is dead
         {
-            if (!onGround)
+            if (!onGround) //in air
             {
-                anim.SetBool("isGrounded", false);
-                transform.Rotate(0, 0, 500 * Time.deltaTime);
+                transform.Rotate(0, 0, 500 * Time.deltaTime); //spin
             }
-            else
+            else //on ground
             {
-                anim.SetBool("isGrounded", true);
-                if (rb2D.velocity.x == 0.0f)
+                if (rb2D.velocity.y >= -0.5f)
+                {
                     transform.SetPositionAndRotation(transform.position, new Quaternion(0, 0, 0, 0));
+                }
             }
 
-            //stop very slowly
+            //stop very very slowly
             float temp = rb2D.velocity.x;
             if (temp < 0)
             {
-                temp += verySlowStopSpeed;
+                temp += 0.03f;
                 if (temp > 0)
                     temp = 0;
             }
             else
             {
-                temp -= verySlowStopSpeed;
+                temp -= 0.03f;
                 if (temp < 0)
                     temp = 0;
             }
 
             rb2D.velocity = new Vector2(temp, rb2D.velocity.y);
 
-            if (onGround && rb2D.velocity.y < 0.5f) //fell on the ground
+            if (onGround && rb2D.velocity.y < -0.5f) //fell on the ground fast
             {
-                rb2D.velocity = new Vector2(rb2D.velocity.x, (rb2D.velocity.y / 2) * -1);
+                rb2D.velocity = new Vector2(rb2D.velocity.x, (rb2D.velocity.y / 2) * -1); //bounce
             }
         }
-        else if (onGround && !ridingClub && !dead) //player is on the ground, and not dead
+        else if (onGround && !ridingClub && !dead && !controlFreeze.freeze) //player is on the ground, and not dead
         {
             if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) //jump pressed
             {
@@ -292,7 +295,7 @@ public class PlayerController : MonoBehaviour
             else if (rb2D.velocity.x > 0) //traveling right
                 sr.flipX = false; //face right
         }
-        else if (!onGround && !ridingClub && !dead) //player is not on the ground, and is not on a club card
+        else if (!onGround && !ridingClub && !dead && !controlFreeze.freeze) //player is not on the ground, and is not on a club card
         {
             if ((Input.GetKey("left") || Input.GetKey("a")) && //both left and right are pressed
                 (Input.GetKey("right") || Input.GetKey("d")))
@@ -393,7 +396,6 @@ public class PlayerController : MonoBehaviour
 
     public void club(bool strong) //player used a clubs suit card
     {
-        Debug.Log("Used a club");
         rb2D.velocity = new Vector2(0f, 0f);
         ridingClub = true;
         cardActive = true;
@@ -408,7 +410,6 @@ public class PlayerController : MonoBehaviour
 
         if (strong == true)
         {
-            Debug.Log("Used a diamond");
             GameObject c = Instantiate(diamondCard, rb2D.transform.position, new Quaternion(0, 0, 0, 0));
 
             if (sr.flipX == false) //facing right
@@ -424,7 +425,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Weak diamond");
             GameObject c = Instantiate(diamondCard, rb2D.transform.position, new Quaternion(0, 0, 0, 0));
             c.GetComponent<Rigidbody2D>().gravityScale = 1;
 
@@ -445,12 +445,10 @@ public class PlayerController : MonoBehaviour
     {
         if (strong == true)
         {
-            Debug.Log("Used a heart");
             shieldTimeLeft = shieldDuration;
         }
         else
         {
-            Debug.Log("Weak heart");
             shieldTimeLeft = (shieldDuration / 2);
         }
 
@@ -465,28 +463,22 @@ public class PlayerController : MonoBehaviour
     public void spade(bool strong) //spades suit card
     {
         rb2D.velocity = new Vector2(0f, 0f); //stop moving
-        spawnCardExtra = Instantiate(spadeCard, new Vector3(rb2D.transform.position.x,
+        GameObject sp = Instantiate(spadeCard, new Vector3(rb2D.transform.position.x,
                                                        rb2D.transform.position.y - 0.5f,
                                                        rb2D.transform.position.z), new Quaternion(0, 0, 0, 0));
 
-        cardVisualDuration = 25;
-
         if (strong == true)
         {
-            Debug.Log("Used a spade");
             rb2D.velocity = new Vector2(rb2D.velocity.x, spadeJumpSpeed);
         }
         else
         {
-            Debug.Log("Weak spade");
             rb2D.velocity = new Vector2(rb2D.velocity.x, (spadeJumpSpeed * 0.5f));
         }
     }
 
     public void joker() //player is out of cards, gets a random effect
     {
-        Debug.Log("Joker card");
-
         //random number between 8 choices
         //1 - 4 being clubs - spades, with 5 -8 being weaker versions of the previous
         int choice = Random.Range(1, 8);

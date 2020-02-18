@@ -27,9 +27,10 @@ public class Hitbox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Destroy enemies and obstacles when touched
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.tag == "EnemyD" || collision.gameObject.tag == "Obstacle")
         {
             Destroy(collision.gameObject);
+            //call object's getDestroyed method when finished
         }
 
         if (collision.gameObject.layer == 8 && isDiamond == true && collision.gameObject.tag != "Diamond")
@@ -42,6 +43,9 @@ public class Hitbox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (lifespan < 590)
+            Physics2D.IgnoreCollision(col, player.GetComponent<Collider2D>(), false);
+
         if (lifespan > 0)
             lifespan--;
         else if (lifespan == 0)
