@@ -10,6 +10,8 @@ TagManager:
   - KillZone
   - EnemyD
   - UIcontrol
+  - Club
+  - Cannonball
   layers:
   - Default
   - TransparentFX

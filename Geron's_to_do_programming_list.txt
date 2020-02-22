@@ -1,13 +1,13 @@
 -Add a button for opening treasure chests
+	-Set up pickups, treasure and cards
 
 -Set up mimic chests and death sequence
 
--Set up normal chests, and treasure/pickup system
+-Set up normal chests
 
--Set up cannons, chains, kracken, and skulls
-	-Set up patrolling and rotating swords
+-Set up cannons, kracken, and skulls
 
--Start planning/designing levels
+-Build levels in level scene
 
 -Add cutscene to starting and ending game
 
@@ -19,6 +19,12 @@
 
 -----------------------------------------------------------
 Done:
+
+-Set up patrolling and rotating swords
+
+-Set up chains
+
+-Design levels
 
 -Fix menu button bugs
 

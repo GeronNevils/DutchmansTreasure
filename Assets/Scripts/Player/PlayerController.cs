@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D objCollider) //collision with object
+    private void OnTriggerStay2D(Collider2D objCollider) //collision with object
     {
         if (!dead)
         {

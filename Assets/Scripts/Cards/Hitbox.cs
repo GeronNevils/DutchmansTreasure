@@ -27,13 +27,13 @@ public class Hitbox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Destroy enemies and obstacles when touched
-        if (collision.gameObject.tag == "EnemyD" || collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.tag == "EnemyD")
         {
             Destroy(collision.gameObject);
             //call object's getDestroyed method when finished
         }
 
-        if (collision.gameObject.layer == 8 && isDiamond == true && collision.gameObject.tag != "Diamond")
+        if (collision.gameObject.layer == 8 && isDiamond == true && collision.gameObject.tag != "Diamond" && collision.gameObject.tag != "Obstacle")
         {
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; //keep them from floating around
             col.isTrigger = false; //make the card solid
