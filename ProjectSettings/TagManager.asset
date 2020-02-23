@@ -8,7 +8,6 @@ TagManager:
   - Obstacle
   - Diamond
   - KillZone
-  - EnemyD
   - UIcontrol
   - Club
   - Cannonball
@@ -46,6 +45,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Behind
+    uniqueID: 3817573777
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: InFront
+    uniqueID: 2984501245
     locked: 0

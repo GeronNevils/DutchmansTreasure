@@ -5,7 +5,9 @@
 
 -Set up normal chests
 
--Set up cannons, kracken, and skulls
+-Set up rotating and tracking cannons
+
+-Set up skulls and big skull
 
 -Build levels in level scene
 
@@ -13,12 +15,16 @@
 
 -Create images for controls menu
 
--Crrate image for joker card in UI
+-Create image for joker card in UI
 
 -Fix awkward menu button "hitboxes" with mouse (May just be a Unity problem)
 
 -----------------------------------------------------------
 Done:
+
+-Set up basic cannon behavior
+
+-Set up kracken
 
 -Set up patrolling and rotating swords
 

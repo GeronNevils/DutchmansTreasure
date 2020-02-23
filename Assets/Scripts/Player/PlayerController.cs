@@ -75,7 +75,8 @@ public class PlayerController : MonoBehaviour
             {
                 respawnPoint = objCollider.gameObject;
             }
-            else if ((objCollider.gameObject.tag == "EnemyD" || objCollider.gameObject.tag == "Enemy")
+            else if ((objCollider.gameObject.tag == "Enemy" ||
+                      objCollider.gameObject.tag == "Cannonball")
                 && shieldsUp == false && ridingClub == false) //hit enemy with no shield
             {
                 setDead(); //die
