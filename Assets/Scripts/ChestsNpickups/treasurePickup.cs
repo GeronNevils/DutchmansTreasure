@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CannonBall : MonoBehaviour
+public class treasurePickup : MonoBehaviour
 {
+    public int treasureValue = 5;
+    StatTracker ssr;
+
+    private void Awake()
+    {
+        ssr = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<StatTracker>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -12,10 +20,11 @@ public class CannonBall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 8 && collision.gameObject.tag != "Obstacle") //hit solid object
+        if (collision.gameObject.tag == ("Player"))
         {
-            //Particles
-            //Sound
+            //particles
+            //sound
+            ssr.treasureCollected += treasureValue;
             Destroy(gameObject);
         }
     }

@@ -17,15 +17,20 @@ public class Card //Contains a suit and value
 public class cardController : MonoBehaviour
 {
     PlayerController playerCon;
+    StatTracker sttr;
 
     GameUI controlFreeze;
 
     public List<Card> deck = new List<Card>();
     string[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
 
+    int jokerCooldown = 60;
+    int currentCooldown;
+
     void Awake()
     {
         playerCon = GetComponent<PlayerController>();
+        sttr = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<StatTracker>();
         controlFreeze = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<GameUI>();
 
         for (int i = 1; i <= 13; i++)
@@ -35,6 +40,15 @@ public class cardController : MonoBehaviour
                 Card c = new Card(suits[j], i);
                 deck.Add(c);
             }
+        }
+    }
+
+    public void addCards() //add cards when picked up
+    {
+        for (int j = 0; j < suits.Length; j++)
+        {
+            Card c = new Card(suits[j], 14);
+            deck.Add(c);
         }
     }
 
@@ -55,10 +69,14 @@ public class cardController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (deck.Count < 1 && currentCooldown > 0)
+            currentCooldown--;
+
         if (playerCon.dead == false && !controlFreeze.freeze)
         {
             if ((Input.GetKeyDown("k") || Input.GetKeyDown(KeyCode.Keypad3)) && deck.Count > 0 && playerCon.cardActive == false) //use a card
             {
+                sttr.cardsUsed++;
                 //could also add something to store coordinates where cards were used here,
                 //to use as a graphic representation of the run at the end of the level.
 
@@ -81,9 +99,11 @@ public class cardController : MonoBehaviour
 
                 deck.RemoveAt(0); //get rid of the used card
             }
-            else if (Input.GetKeyDown("k") && deck.Count < 1 && playerCon.cardActive == false) //use a joker
+            else if (Input.GetKeyDown("k") && deck.Count < 1 && playerCon.cardActive == false && currentCooldown <= 0) //use a joker
             { //add NumPad 3 input
+                sttr.cardsUsed++;
                 playerCon.joker();
+                currentCooldown = jokerCooldown;
             }
         }
     }

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     cardController cardCon;
     SpriteRenderer sr;
     Animator anim;
+    StatTracker stats;
 
     GameUI controlFreeze;
 
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public GameObject diamondCard; //the diamond card
 
     public GameObject heartCard; //the heart card
-    bool shieldsUp = false; //if the player's shield is active
+    public bool shieldsUp = false; //if the player's shield is active
     int shieldDuration = 300; //Duration shield will be active
     int shieldTimeLeft = 0; //Remaining duration of shield
 
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         controlFreeze = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<GameUI>();
+        stats = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<StatTracker>();
     }
 
     // Start is called before the first frame update
@@ -88,12 +90,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void caughtByMimic() //caught by a mimic chest
+    {
+        setDead();
+        sr.enabled = false;
+    }
+
     void setDead()
     {
         dead = true;
         anim.SetBool("isDead", true);
         effectCancel();
         respawnDelay = 300;
+        stats.numOfDeaths++;
     }
 
     void respawn(float posX, float posY) //respawn player at respawn point
@@ -101,7 +110,10 @@ public class PlayerController : MonoBehaviour
         dead = false;
         effectCancel();
         anim.SetBool("isDead", false);
+        //spawn particles
         transform.SetPositionAndRotation(new Vector2(posX, posY), new Quaternion(0, 0, 0, 0));
+        sr.enabled = true;
+        //spawn particles
         rb2D.velocity = new Vector2(0f, 0f);
     }
 
@@ -480,8 +492,8 @@ public class PlayerController : MonoBehaviour
 
     public void joker() //player is out of cards, gets a random effect
     {
-        //random number between 8 choices
-        //1 - 4 being clubs - spades, with 5 -8 being weaker versions of the previous
+        //random number between 7 choices
+        //1 - 4 being clubs - spades, with 5 - 7 being weaker versions of the previous
         int choice = Random.Range(1, 8);
 
         switch (choice)

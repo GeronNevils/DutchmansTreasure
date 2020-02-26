@@ -11,7 +11,12 @@ public class GameUI : MonoBehaviour
 
     public Sprite[] cardPics;
 
+    public TextMeshProUGUI deathNumber;
+    public TextMeshProUGUI treasureNumber;
+
     cardController conC;
+
+    StatTracker tracks;
 
     public TextMeshProUGUI cardsLeft;
 
@@ -23,8 +28,11 @@ public class GameUI : MonoBehaviour
     private void Awake()
     {
         conC = GameObject.FindGameObjectWithTag("Player").GetComponent<cardController>();
+        tracks = GetComponent<StatTracker>();
 
         cardsLeft.GetComponent<TextMeshProUGUI>();
+        deathNumber.GetComponent<TextMeshProUGUI>();
+        treasureNumber.GetComponent<TextMeshProUGUI>();
 
         freeze = true;
         quit = false;
@@ -48,6 +56,9 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        deathNumber.text = "" + tracks.numOfDeaths;
+        treasureNumber.text = "$" + tracks.treasureCollected;
+
         if (freeze == false && Input.GetKeyDown(KeyCode.Backspace)) //restart level
         {
             SceneManager.LoadScene("LevelScene");

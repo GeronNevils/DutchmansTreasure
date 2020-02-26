@@ -6,6 +6,8 @@ public class Cannon : MonoBehaviour
 {
     public GameObject projectile; //the cannonball
 
+    public float cannonBallSpeed = 2f;
+
     public int fireCooldown = 100; //for stationary and targeting cannons
     int setCooldown; //holds the original cooldown value
 
@@ -45,7 +47,10 @@ public class Cannon : MonoBehaviour
 
                 GameObject cb = Instantiate(projectile, transform.position, new Quaternion(0, 0, 0, 0));
 
-                cb.GetComponent<Rigidbody2D>().velocity = transform.forward * 2f;
+                //particles
+                //sound
+
+                cb.GetComponent<Rigidbody2D>().velocity = transform.forward * cannonBallSpeed;
             }
         }
     }

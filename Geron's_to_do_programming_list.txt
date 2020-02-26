@@ -17,6 +17,8 @@
 
 -Create image for joker card in UI
 
+-Create particles for getting hit, using/discarding cards, and respawning
+
 -Fix awkward menu button "hitboxes" with mouse (May just be a Unity problem)
 
 -----------------------------------------------------------
