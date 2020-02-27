@@ -32,7 +32,7 @@ public class mimicChest : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D c)
     {
-        if (c.gameObject.tag == ("Player") && attackTimer <= 0 && pl.dead == false && pl.shieldsUp == false) //touching player
+        if (c.gameObject.tag == ("Player") && attackTimer <= 0 && pl.dead == false) //touching player
         {
             an.SetBool("playerCaught", true);
             an.SetBool("playerNear", false);

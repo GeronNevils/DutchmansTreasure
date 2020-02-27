@@ -11,7 +11,7 @@ TagManager:
   - UIcontrol
   - Club
   - Cannonball
-  - EnemyD
+  - Boss
   layers:
   - Default
   - TransparentFX

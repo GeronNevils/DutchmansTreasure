@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 864389688556738603}
   - component: {fileID: 864389688556738606}
   - component: {fileID: 2838411318574947742}
+  - component: {fileID: -3524546011545426673}
   m_Layer: 0
   m_Name: Skull
-  m_TagString: EnemyD
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 864389688556738602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -130,4 +131,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8ae0e86928cb54796219bcd40846d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 5010027326741647487, guid: 55914630fa6831e4cb72cbe86f7f9e17, type: 3}
+  skullMoveSpeed: 1
+  isImperviousToCards: 0
+--- !u!50 &-3524546011545426673
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864389688556738602}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

@@ -43,15 +43,6 @@ public class cardController : MonoBehaviour
         }
     }
 
-    public void addCards() //add cards when picked up
-    {
-        for (int j = 0; j < suits.Length; j++)
-        {
-            Card c = new Card(suits[j], 14);
-            deck.Add(c);
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +65,7 @@ public class cardController : MonoBehaviour
 
         if (playerCon.dead == false && !controlFreeze.freeze)
         {
-            if ((Input.GetKeyDown("k") || Input.GetKeyDown(KeyCode.Keypad3)) && deck.Count > 0 && playerCon.cardActive == false) //use a card
+            if ((Input.GetKeyDown("k") || Input.GetKeyDown(KeyCode.Keypad1)) && deck.Count > 0 && playerCon.cardActive == false) //use a card
             {
                 sttr.cardsUsed++;
                 //could also add something to store coordinates where cards were used here,
@@ -99,7 +90,7 @@ public class cardController : MonoBehaviour
 
                 deck.RemoveAt(0); //get rid of the used card
             }
-            else if (Input.GetKeyDown("k") && deck.Count < 1 && playerCon.cardActive == false && currentCooldown <= 0) //use a joker
+            else if ((Input.GetKeyDown("k") || Input.GetKeyDown(KeyCode.Keypad1)) && deck.Count < 1 && playerCon.cardActive == false && currentCooldown <= 0) //use a joker
             { //add NumPad 3 input
                 sttr.cardsUsed++;
                 playerCon.joker();

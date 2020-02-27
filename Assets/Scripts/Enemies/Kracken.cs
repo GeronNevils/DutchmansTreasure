@@ -44,7 +44,7 @@ public class Kracken : MonoBehaviour
             //go back into hiding
             animate.SetBool("playerClose", false);
 
-            transform.position = Vector2.MoveTowards(transform.position, orgPosition, (attackSpeed / 2f) * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, orgPosition, (attackSpeed / 4f) * Time.deltaTime);
         }
     }
 }

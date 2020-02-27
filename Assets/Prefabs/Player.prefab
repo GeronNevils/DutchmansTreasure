@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: c0468ff2f2851934db9d5290510b5e99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -130,6 +130,7 @@ MonoBehaviour:
     type: 3}
   heartCard: {fileID: 206499309945203730, guid: 809c514ed061b6e4e8ea0145d1c50ca6,
     type: 3}
+  shieldsUp: 0
   spadeCard: {fileID: 2803724461345008049, guid: ebf9a22a59173ef48832940c5bb6e546,
     type: 3}
   onGround: 0

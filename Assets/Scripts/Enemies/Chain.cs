@@ -6,7 +6,7 @@ public class Chain : MonoBehaviour
 {
     Rigidbody2D rbb;
     bool die;
-    int dieTimer = 100;
+    int dieTimer = 200;
 
 
     private void Awake()

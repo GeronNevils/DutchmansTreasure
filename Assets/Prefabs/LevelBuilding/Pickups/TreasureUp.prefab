@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5166323416386583270}
   - component: {fileID: 5166323416386583271}
   - component: {fileID: 5166323416386583268}
+  - component: {fileID: 4356543214593069408}
   m_Layer: 0
   m_Name: TreasureUp
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -1310466051
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ff17b1b4f62ce9c4fad44eff051dd28a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b237166d541a7ff4db3b58398c4e9ac6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,7 +123,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
+    oldSize: {x: 4.53, y: 4.53}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -148,7 +149,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
+    oldSize: {x: 4.53, y: 4.53}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -169,4 +170,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad801be39339b34d92a8c7410b9bc80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treasureValue: 5
+  treasureValue: 100
+--- !u!95 &4356543214593069408
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5166323416386583269}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d3e0fd8aba3f2064aa0168fdc0535870, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

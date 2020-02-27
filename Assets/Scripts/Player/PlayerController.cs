@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     float quickStopSpeed = 0.5f; //How fast the player stops when holding both left & right on the ground
     float slowStopSpeed = 0.1f; //How fast the player stops holding no keys on the ground
     float verySlowStopSpeed = 0.06f; //how fast the player stops holding no keys in the air
-    float jumpSpeed = 5.5f; //Vertical speed applied when jumping;
+    float jumpSpeed = 5.7f; //Vertical speed applied when jumping;
 
     int respawnDelay = 0; //The delay between death and respawn
 
@@ -77,9 +77,10 @@ public class PlayerController : MonoBehaviour
             {
                 respawnPoint = objCollider.gameObject;
             }
-            else if ((objCollider.gameObject.tag == "Enemy" ||
+            else if (((objCollider.gameObject.tag == "Enemy" ||
                       objCollider.gameObject.tag == "Cannonball")
-                && shieldsUp == false && ridingClub == false) //hit enemy with no shield
+                && shieldsUp == false && ridingClub == false) ||
+                      (objCollider.gameObject.tag == "Boss")) //hit enemy with no shield
             {
                 setDead(); //die
             }
@@ -166,7 +167,7 @@ public class PlayerController : MonoBehaviour
         ground = LayerMask.GetMask("Level");
 
         //Cast a ray downward
-        groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.85f, ground);
+        groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.89f, ground);
 
         if (groundCheck.collider != null) //the player is on the ground
         {
@@ -193,7 +194,7 @@ public class PlayerController : MonoBehaviour
         {
             effectCancel();
         }
-        else if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad1)) && cardActive == false && !controlFreeze.freeze) //discard card
+        else if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad3)) && cardActive == false && !controlFreeze.freeze) //discard card
         {
             cardCon.discard();
         }
