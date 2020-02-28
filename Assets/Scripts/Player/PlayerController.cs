@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
             respawn(respawnPoint.transform.position.x, respawnPoint.transform.position.y);
         }
 
-        if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad1)) && cardActive == true) //cancel current card effects
+        if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad3)) && cardActive == true) //cancel current card effects
         {
             effectCancel();
         }

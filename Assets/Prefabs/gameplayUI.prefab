@@ -818,7 +818,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c3fd6a63e11d15143bbe77d8ab0ec69d, type: 3}
   - {fileID: 21300000, guid: e6ff0e59290b6b54a95d3af047f71af0, type: 3}
   - {fileID: 21300000, guid: 12d7d71d018d1bf48957f415135c4d33, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: fca4ce667b4c85b47be05a6189c983bb, type: 3}
   deathNumber: {fileID: 9115038735172409231}
   treasureNumber: {fileID: 3074570005021288498}
   cardsLeft: {fileID: 8195179490216228854}
