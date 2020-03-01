@@ -30,6 +30,11 @@ public class PlayerController : MonoBehaviour
     GameObject spawnHitbox;
     GameObject spawnHitboxExtra;
 
+    public GameObject gotHitParticles;
+    public GameObject respawnParticles;
+    public GameObject useCardParticles;
+    public GameObject discardParticles;
+
     public bool cardActive; //if a card effect is currently in use
 
     public GameObject clubCard; //the club card and its hitboxes
@@ -83,6 +88,8 @@ public class PlayerController : MonoBehaviour
                       (objCollider.gameObject.tag == "Boss")) //hit enemy with no shield
             {
                 setDead(); //die
+                //particles
+                Instantiate(gotHitParticles, transform.position, new Quaternion(0, 0, 0, 0));
             }
             else if (objCollider.gameObject.tag == "KillZone") //hit out-of-bounds
             {
@@ -111,10 +118,16 @@ public class PlayerController : MonoBehaviour
         dead = false;
         effectCancel();
         anim.SetBool("isDead", false);
-        //spawn particles
+        if (sr.enabled == true)
+        {
+            //spawn particles
+            Instantiate(respawnParticles, transform.position, new Quaternion(0, 0, 0, 0));
+        }
+
         transform.SetPositionAndRotation(new Vector2(posX, posY), new Quaternion(0, 0, 0, 0));
         sr.enabled = true;
         //spawn particles
+        Instantiate(respawnParticles, transform.position, new Quaternion(0, 0, 0, 0));
         rb2D.velocity = new Vector2(0f, 0f);
     }
 
@@ -183,6 +196,7 @@ public class PlayerController : MonoBehaviour
         if (onGround && rb2D.velocity.y < -9f && !ridingClub) //hit ground too fast test
         {
             setDead(); //die
+            Instantiate(gotHitParticles, transform.position, new Quaternion(0, 0, 0, 0));
         }
 
         if (Input.GetKeyDown("r") && !controlFreeze.freeze) //input respawn
@@ -192,10 +206,12 @@ public class PlayerController : MonoBehaviour
 
         if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad3)) && cardActive == true) //cancel current card effects
         {
+            Instantiate(discardParticles, transform.position, new Quaternion(0, 0, 0, 0));
             effectCancel();
         }
         else if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad3)) && cardActive == false && !controlFreeze.freeze) //discard card
         {
+            Instantiate(discardParticles, transform.position, new Quaternion(0, 0, 0, 0));
             cardCon.discard();
         }
 
@@ -410,6 +426,7 @@ public class PlayerController : MonoBehaviour
 
     public void club(bool strong) //player used a clubs suit card
     {
+        Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
         rb2D.velocity = new Vector2(0f, 0f);
         ridingClub = true;
         cardActive = true;
@@ -420,7 +437,7 @@ public class PlayerController : MonoBehaviour
 
     public void diamond(bool strong) //diamonds suit card
     {
-        //This needs adjusting for when player direction is kept track of
+        Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
 
         if (strong == true)
         {
@@ -457,6 +474,8 @@ public class PlayerController : MonoBehaviour
 
     public void heart(bool strong) //hearts suit card
     {
+        Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
+
         if (strong == true)
         {
             shieldTimeLeft = shieldDuration;
@@ -476,6 +495,8 @@ public class PlayerController : MonoBehaviour
 
     public void spade(bool strong) //spades suit card
     {
+        Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
+
         rb2D.velocity = new Vector2(0f, 0f); //stop moving
         GameObject sp = Instantiate(spadeCard, new Vector3(rb2D.transform.position.x,
                                                        rb2D.transform.position.y - 0.5f,

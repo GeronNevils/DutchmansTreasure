@@ -95,6 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492e54ab3b1c29a4983bb34ace5862c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupParticles: {fileID: 9091547527786933336, guid: a9645131a56e0944a8716268db3c9364,
+    type: 3}
   lootContained: []
 --- !u!95 &1032033207628218254
 Animator:

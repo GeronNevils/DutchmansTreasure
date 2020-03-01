@@ -7,6 +7,7 @@ public class Tchest : MonoBehaviour
     SpriteRenderer srr;
     Animator openOrNot;
 
+    public GameObject pickupParticles;
     public GameObject[] lootContained; //pickups in the chest
     bool open;
 
@@ -29,6 +30,7 @@ public class Tchest : MonoBehaviour
         if (co.gameObject.tag == ("Player") && open == false &&
             (Input.GetKeyDown("o") || Input.GetKeyDown(KeyCode.Keypad5)))
         {
+            Instantiate(pickupParticles, transform.position, new Quaternion(0, 0, 0, 0));
             dropLoot();
             open = true;
         }
@@ -40,9 +42,7 @@ public class Tchest : MonoBehaviour
 
         for (int i = 0; i < lootContained.Length; i++)
         {
-            GameObject l = Instantiate(lootContained[i], transform.position, new Quaternion(0, 0, 0, 0));
-            int spd = Random.Range(-3, 4);
-            l.GetComponent<Rigidbody2D>().velocity = new Vector2((float) spd, 1f);
+            Instantiate(lootContained[i], transform.position, new Quaternion(0, 0, 0, 0));
         }
     }
 

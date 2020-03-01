@@ -58,3 +58,6 @@ TagManager:
   - name: InFront
     uniqueID: 2984501245
     locked: 0
+  - name: ForeGround
+    uniqueID: 2177897643
+    locked: 0

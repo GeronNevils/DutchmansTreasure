@@ -119,6 +119,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
+  gotHitParticles: {fileID: 4703308825646760079, guid: 33136d49438603d499c8893e2ecfe1d9,
+    type: 3}
+  respawnParticles: {fileID: 8049205167065805253, guid: 50c2143990a92734aa07814997cbe03f,
+    type: 3}
+  useCardParticles: {fileID: 3401578961218111619, guid: 3e6dcac3cc708504bab09626cfe07e38,
+    type: 3}
+  discardParticles: {fileID: 1051892772758249798, guid: 266dc2e059342b04d9b365f1bfed8857,
+    type: 3}
   cardActive: 0
   clubCard: {fileID: 4376150004864055073, guid: b784c460a30f7344dbace16b1da48b11,
     type: 3}

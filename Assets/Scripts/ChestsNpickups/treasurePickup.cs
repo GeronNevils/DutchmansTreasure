@@ -4,25 +4,38 @@ using UnityEngine;
 
 public class treasurePickup : MonoBehaviour
 {
+    int collisionTimer = 60;
+    BoxCollider2D col;
+    CircleCollider2D ccol;
+    GameObject player;
+
+    public GameObject pickupParticles;
     public int treasureValue = 5;
     StatTracker ssr;
 
     private void Awake()
     {
+        col = GetComponent<BoxCollider2D>();
+        ccol = GetComponent<CircleCollider2D>();
+        player = GameObject.FindGameObjectWithTag("Player");
         ssr = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<StatTracker>();
+        Physics2D.IgnoreCollision(col, player.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(ccol, player.GetComponent<Collider2D>());
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        int spd = Random.Range(-3, 4);
+        GetComponent<Rigidbody2D>().velocity = new Vector2((float)spd, 1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == ("Player"))
+        if (collision.gameObject == player)
         {
             //particles
+            Instantiate(pickupParticles, transform.position, new Quaternion(0, 0, 0, 0));
             //sound
             ssr.treasureCollected += treasureValue;
             Destroy(gameObject);
@@ -32,6 +45,13 @@ public class treasurePickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (collisionTimer > -1)
+            collisionTimer--;
+
+        if (collisionTimer == 0)
+        {
+            Physics2D.IgnoreCollision(col, player.GetComponent<Collider2D>(), false);
+            Physics2D.IgnoreCollision(ccol, player.GetComponent<Collider2D>(), false);
+        }
     }
 }
