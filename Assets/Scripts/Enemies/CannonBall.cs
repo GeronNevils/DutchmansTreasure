@@ -5,6 +5,7 @@ using UnityEngine;
 public class CannonBall : MonoBehaviour
 {
     int lifeSpan = 1000;
+    public GameObject explodeParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,8 @@ public class CannonBall : MonoBehaviour
         if (collision.gameObject.layer == 8 && collision.gameObject.tag != "Obstacle") //hit solid object
         {
             //Particles
+            Instantiate(explodeParticles, transform.position, new Quaternion(0, 0, 0, 0));
+
             //Sound
             Destroy(gameObject);
         }

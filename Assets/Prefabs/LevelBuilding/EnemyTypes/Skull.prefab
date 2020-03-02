@@ -131,6 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8ae0e86928cb54796219bcd40846d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleDe: {fileID: 5217363264162047734, guid: 067b5617dba377346ad5bad8b453ca83,
+    type: 3}
   skullMoveSpeed: 1
   isImperviousToCards: 0
 --- !u!50 &-3524546011545426673

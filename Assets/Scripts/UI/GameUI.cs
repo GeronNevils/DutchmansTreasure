@@ -7,6 +7,8 @@ using TMPro;
 
 public class GameUI : MonoBehaviour
 {
+    public GameObject exitt;
+
     public Image currentCard;
 
     public Sprite[] cardPics;
@@ -70,6 +72,12 @@ public class GameUI : MonoBehaviour
             freeze = true;
         }
 
+        if (exitt.GetComponent<ExitTrigger>().gameFinished == true) //game finished
+        {
+            quit = true;
+            freeze = true;
+        }
+
         if (fade.color.a > 0f && quit == false)
         {
             Color temp = fade.color;
@@ -87,8 +95,10 @@ public class GameUI : MonoBehaviour
             fade.color = temp;
         }
 
-        if (fade.color.a > 0.99f && quit == true)
+        if (fade.color.a > 0.99f && quit == true && exitt.GetComponent<ExitTrigger>().gameFinished == false)
             SceneManager.LoadScene("MenuScene");
+        else if (fade.color.a > 0.99f && quit == true && exitt.GetComponent<ExitTrigger>().gameFinished == true)
+            SceneManager.LoadScene("CutScene");
 
         cardsLeft.text = "" + conC.deck.Count;
 

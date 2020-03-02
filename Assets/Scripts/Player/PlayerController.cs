@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public GameObject respawnParticles;
     public GameObject useCardParticles;
     public GameObject discardParticles;
+    public GameObject clubParticles;
 
     public bool cardActive; //if a card effect is currently in use
 
@@ -56,7 +57,11 @@ public class PlayerController : MonoBehaviour
 
     LayerMask ground;
     RaycastHit2D groundCheck;
+    RaycastHit2D groundCheck2;
     public bool onGround;
+
+    Collider2D fugginOffsets;
+    float xOff;
 
     void Awake()
     {
@@ -66,6 +71,9 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         controlFreeze = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<GameUI>();
         stats = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<StatTracker>();
+
+        fugginOffsets = GetComponent<Collider2D>();
+        xOff = fugginOffsets.offset.x;
     }
 
     // Start is called before the first frame update
@@ -155,6 +163,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (sr.flipX == true)
+        {
+            fugginOffsets.offset = new Vector2((xOff * -1), fugginOffsets.offset.y);
+            groundCheck2 = Physics2D.Raycast(new Vector2(
+                                                     (transform.position.x - 0.25f),
+                                                     transform.position.y),
+                                                     Vector2.down, 0.89f, ground);
+        }
+        else
+        {
+            fugginOffsets.offset = new Vector2(xOff, fugginOffsets.offset.y);
+            groundCheck2 = Physics2D.Raycast(new Vector2(
+                                                     (transform.position.x + 0.25f),
+                                                     transform.position.y),
+                                                     Vector2.down, 0.89f, ground);
+        }
+
         if (dead && respawnDelay == 0) //if the player is dead and the delay is done, then respawn
             respawn(respawnPoint.transform.position.x, respawnPoint.transform.position.y);
         //Implement cooldown and death animation
@@ -181,8 +206,9 @@ public class PlayerController : MonoBehaviour
 
         //Cast a ray downward
         groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 0.89f, ground);
-
-        if (groundCheck.collider != null) //the player is on the ground
+       
+        
+        if (groundCheck.collider != null || groundCheck2.collider != null) //the player is on the ground
         {
             onGround = true;
             anim.SetBool("isGrounded", true);
@@ -403,6 +429,10 @@ public class PlayerController : MonoBehaviour
                 if (groundTimer == 0) //prevent infinite spawning
                 {
                     spawnHitboxExtra = Instantiate(clubLandHitbox, rb2D.transform.position, new Quaternion(0, 0, 0, 0));
+                    Instantiate(clubParticles, new Vector3(
+                                                           transform.position.x,
+                                                           (transform.position.y - 0.5f),
+                                                           transform.position.z), new Quaternion(0, 0, 0, 0));
                     groundTimer = 30;
                 }
                 Destroy(spawnHitbox);

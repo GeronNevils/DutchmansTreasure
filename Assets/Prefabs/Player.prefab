@@ -127,6 +127,8 @@ MonoBehaviour:
     type: 3}
   discardParticles: {fileID: 1051892772758249798, guid: 266dc2e059342b04d9b365f1bfed8857,
     type: 3}
+  clubParticles: {fileID: 8901157926500223489, guid: 97d5a2bb7664eed4c8a2f6e86dca5c37,
+    type: 3}
   cardActive: 0
   clubCard: {fileID: 4376150004864055073, guid: b784c460a30f7344dbace16b1da48b11,
     type: 3}
@@ -186,6 +188,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.1}
-  m_Size: {x: 5.12, y: 7.8}
+  m_Offset: {x: 0.61, y: -0.25}
+  m_Size: {x: 1.89, y: 6.88}
   m_Direction: 0

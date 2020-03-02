@@ -71,3 +71,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDiamond: 0
+  vanishParticles: {fileID: 8089664510872853837, guid: 24ad07798a1123b4b8a236efe9510abb,
+    type: 3}

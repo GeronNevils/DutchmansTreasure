@@ -267,6 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8314aa92f388f42aaa35652c537626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireParticles: {fileID: 7639533212137580291, guid: 5ae3ee57be028db4f8f414e0ec2391e1,
+    type: 3}
   projectile: {fileID: 4728435704945833794, guid: 58f4138fa9a06d7408060ed9167ba631,
     type: 3}
   spawnSpot: {fileID: 3840470793731867191}

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Skull : MonoBehaviour
 {
+    public GameObject particleDe;
+
     bool isToast = false;
     int deSpawnTimer = 200;
 
@@ -45,6 +47,7 @@ public class Skull : MonoBehaviour
             (col.gameObject.tag == ("Club") && !isImperviousToCards) ||
             col.gameObject.tag == ("Cannonball"))
         {
+            Instantiate(particleDe, transform.position, new Quaternion(0, 0, 0, 0));
             isToast = true;
             Destroy(gameObject.GetComponent<Collider2D>());
 

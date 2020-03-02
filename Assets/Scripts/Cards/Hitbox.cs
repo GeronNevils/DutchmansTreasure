@@ -9,6 +9,7 @@ public class Hitbox : MonoBehaviour
     GameObject player;
     Collider2D col;
     public bool isDiamond = false;
+    public GameObject vanishParticles;
     int lifespan = 600; //how long the hitbox will stick around, mostly for culling leftover diamond cards
 
     private void Awake()
@@ -43,7 +44,10 @@ public class Hitbox : MonoBehaviour
         if (lifespan > 0)
             lifespan--;
         else if (lifespan == 0)
+        {
+            Instantiate(vanishParticles, transform.position, new Quaternion(0, 0, 0, 0));
             Destroy(gameObject);
+        }
 
         if (isDiamond) //make card go spinny
         {

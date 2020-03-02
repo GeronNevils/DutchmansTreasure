@@ -6,6 +6,8 @@ public class ChainParent : MonoBehaviour
 {
     public GameObject[] chains;
 
+    public GameObject particleD;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,7 @@ public class ChainParent : MonoBehaviour
             {
                 chains[i].GetComponent<Chain>().chainDestroyed();
             }
+            Instantiate(particleD, collision.gameObject.transform.position, new Quaternion(0, 0, 0, 0));
 
             Destroy(gameObject);
         }

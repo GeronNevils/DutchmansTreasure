@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
+    public GameObject fireParticles;
+
     public GameObject projectile; //the cannonball
     public GameObject spawnSpot; //where the cannonball spawns
 
@@ -79,6 +81,8 @@ public class Cannon : MonoBehaviour
                 GameObject cb = Instantiate(projectile, spawnSpot.transform.position, new Quaternion(0, 0, 0, 0));
 
                 //particles
+                Instantiate(fireParticles, spawnSpot.transform.position, new Quaternion(0, 0, 0, 0));
+
                 //sound
 
                 cb.GetComponent<Rigidbody2D>().velocity = transform.forward * cannonBallSpeed;
