@@ -135,6 +135,7 @@ MonoBehaviour:
     type: 3}
   skullMoveSpeed: 1
   isImperviousToCards: 0
+  ded: {fileID: 8300000, guid: 6f55922fe5c2fd0448b83174dfab2c85, type: 3}
 --- !u!50 &-3524546011545426673
 Rigidbody2D:
   serializedVersion: 4

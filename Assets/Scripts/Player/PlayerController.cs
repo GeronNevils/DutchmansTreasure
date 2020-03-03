@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    AudioSource aldoNova;
+    public AudioClip fallDeathSound;
+    public AudioClip hitDeathSound;
+    public AudioClip respawnSound;
+    public AudioClip discardSound;
+    public AudioClip clubSound;
+    public AudioClip diamondSound;
+    public AudioClip heartSound;
+    public AudioClip spadeSound;
+
     Rigidbody2D rb2D;
     cardController cardCon;
     SpriteRenderer sr;
@@ -72,6 +82,8 @@ public class PlayerController : MonoBehaviour
         controlFreeze = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<GameUI>();
         stats = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<StatTracker>();
 
+        aldoNova = GetComponent<AudioSource>();
+
         fugginOffsets = GetComponent<Collider2D>();
         xOff = fugginOffsets.offset.x;
     }
@@ -96,6 +108,10 @@ public class PlayerController : MonoBehaviour
                       (objCollider.gameObject.tag == "Boss")) //hit enemy with no shield
             {
                 setDead(); //die
+
+                aldoNova.clip = hitDeathSound;
+                aldoNova.PlayOneShot(hitDeathSound, 1f);
+
                 //particles
                 Instantiate(gotHitParticles, transform.position, new Quaternion(0, 0, 0, 0));
             }
@@ -131,6 +147,9 @@ public class PlayerController : MonoBehaviour
             //spawn particles
             Instantiate(respawnParticles, transform.position, new Quaternion(0, 0, 0, 0));
         }
+
+        aldoNova.clip = respawnSound;
+        aldoNova.PlayOneShot(respawnSound, 1f);
 
         transform.SetPositionAndRotation(new Vector2(posX, posY), new Quaternion(0, 0, 0, 0));
         sr.enabled = true;
@@ -219,8 +238,11 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isGrounded", false);
         }
 
-        if (onGround && rb2D.velocity.y < -9f && !ridingClub) //hit ground too fast test
+        if (onGround && rb2D.velocity.y < -9f && !ridingClub) //hit ground too fast
         {
+            aldoNova.clip = fallDeathSound;
+            aldoNova.PlayOneShot(aldoNova.clip, 1f);
+
             setDead(); //die
             Instantiate(gotHitParticles, transform.position, new Quaternion(0, 0, 0, 0));
         }
@@ -234,11 +256,15 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(discardParticles, transform.position, new Quaternion(0, 0, 0, 0));
             effectCancel();
+            aldoNova.clip = discardSound;
+            aldoNova.PlayOneShot(discardSound, 1f);
         }
         else if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad3)) && cardActive == false && !controlFreeze.freeze) //discard card
         {
             Instantiate(discardParticles, transform.position, new Quaternion(0, 0, 0, 0));
             cardCon.discard();
+            aldoNova.clip = discardSound;
+            aldoNova.PlayOneShot(discardSound, 1f);
         }
 
         if (dead == true) //player is dead
@@ -429,6 +455,10 @@ public class PlayerController : MonoBehaviour
                 if (groundTimer == 0) //prevent infinite spawning
                 {
                     spawnHitboxExtra = Instantiate(clubLandHitbox, rb2D.transform.position, new Quaternion(0, 0, 0, 0));
+
+                    aldoNova.clip = clubSound;
+                    aldoNova.PlayOneShot(clubSound, 1f);
+
                     Instantiate(clubParticles, new Vector3(
                                                            transform.position.x,
                                                            (transform.position.y - 0.5f),
@@ -469,6 +499,9 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
 
+        aldoNova.clip = diamondSound;
+        aldoNova.PlayOneShot(diamondSound, 1f);
+
         if (strong == true)
         {
             GameObject c = Instantiate(diamondCard, rb2D.transform.position, new Quaternion(0, 0, 0, 0));
@@ -505,6 +538,8 @@ public class PlayerController : MonoBehaviour
     public void heart(bool strong) //hearts suit card
     {
         Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
+        aldoNova.clip = heartSound;
+        aldoNova.PlayOneShot(heartSound, 1f);
 
         if (strong == true)
         {
@@ -526,6 +561,9 @@ public class PlayerController : MonoBehaviour
     public void spade(bool strong) //spades suit card
     {
         Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
+
+        aldoNova.clip = spadeSound;
+        aldoNova.PlayOneShot(spadeSound, 1f);
 
         rb2D.velocity = new Vector2(0f, 0f); //stop moving
         GameObject sp = Instantiate(spadeCard, new Vector3(rb2D.transform.position.x,

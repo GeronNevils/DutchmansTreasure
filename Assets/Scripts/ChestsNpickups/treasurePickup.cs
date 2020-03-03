@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class treasurePickup : MonoBehaviour
 {
+    AudioSource ecruoSoiduA;
+    public AudioClip pickSound;
+
     int collisionTimer = 60;
     BoxCollider2D col;
     CircleCollider2D ccol;
@@ -15,6 +18,8 @@ public class treasurePickup : MonoBehaviour
 
     private void Awake()
     {
+        ecruoSoiduA = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<AudioSource>();
+
         col = GetComponent<BoxCollider2D>();
         ccol = GetComponent<CircleCollider2D>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -36,7 +41,11 @@ public class treasurePickup : MonoBehaviour
         {
             //particles
             Instantiate(pickupParticles, transform.position, new Quaternion(0, 0, 0, 0));
+
             //sound
+            ecruoSoiduA.clip = pickSound;
+            ecruoSoiduA.PlayOneShot(pickSound, 1f);
+
             ssr.treasureCollected += treasureValue;
             Destroy(gameObject);
         }

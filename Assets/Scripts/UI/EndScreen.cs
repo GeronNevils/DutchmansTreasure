@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class EndScreen : MonoBehaviour
 {
+    AudioSource asdf;
+    public AudioClip bAmbience;
+
     public GameObject boat;
     bool moveBoat = false;
 
@@ -19,6 +22,8 @@ public class EndScreen : MonoBehaviour
 
     private void Awake()
     {
+        asdf = GetComponent<AudioSource>();
+
         movePlayer = playerImg.GetComponent<Rigidbody2D>();
         playerImg.GetComponent<SpriteRenderer>().flipX = true;
 
@@ -30,7 +35,8 @@ public class EndScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        asdf.clip = bAmbience;
+        asdf.PlayOneShot(bAmbience, 0.2f);
     }
 
     // Update is called once per frame
@@ -72,6 +78,8 @@ public class EndScreen : MonoBehaviour
         }
         else if (fadeOut == true)
         {
+            asdf.volume = asdf.volume -= 0.01f;
+
             if (faderBlue.color.a < 1f)
             {
                 Color temp = faderBlue.color;

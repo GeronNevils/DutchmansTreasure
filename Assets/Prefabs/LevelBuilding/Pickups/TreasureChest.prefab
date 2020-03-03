@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492e54ab3b1c29a4983bb34ace5862c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openSound: {fileID: 8300000, guid: 804c0ac24fd5ea040a53af8e35cf7889, type: 3}
   pickupParticles: {fileID: 9091547527786933336, guid: a9645131a56e0944a8716268db3c9364,
     type: 3}
   lootContained: []

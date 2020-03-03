@@ -71,6 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoomEntrance: 0
+  transSound: {fileID: 8300000, guid: 6fbc4888ee0e78540891bafe7205cb88, type: 3}
 --- !u!1 &874349228889471770
 GameObject:
   m_ObjectHideFlags: 0

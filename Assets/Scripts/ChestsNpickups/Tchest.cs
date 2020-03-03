@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Tchest : MonoBehaviour
 {
+    AudioSource sourcy;
+    public AudioClip openSound;
+
     SpriteRenderer srr;
     Animator openOrNot;
 
@@ -13,6 +16,7 @@ public class Tchest : MonoBehaviour
 
     private void Awake()
     {
+        sourcy = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<AudioSource>();
         srr = GetComponent<SpriteRenderer>();
         openOrNot = GetComponent<Animator>();
     }
@@ -39,6 +43,9 @@ public class Tchest : MonoBehaviour
     void dropLoot()
     {
         openOrNot.SetBool("open", true);
+
+        sourcy.clip = openSound;
+        sourcy.PlayOneShot(openSound, 1f);
 
         for (int i = 0; i < lootContained.Length; i++)
         {

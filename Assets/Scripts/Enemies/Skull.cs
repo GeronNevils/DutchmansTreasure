@@ -28,11 +28,16 @@ public class Skull : MonoBehaviour
 
     RaycastHit2D hit;
 
+    AudioSource sas;
+    public AudioClip ded;
+
     private void Awake()
     {
         arbys = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         ssr = GetComponent<SpriteRenderer>();
+
+        sas = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -50,6 +55,9 @@ public class Skull : MonoBehaviour
             Instantiate(particleDe, transform.position, new Quaternion(0, 0, 0, 0));
             isToast = true;
             Destroy(gameObject.GetComponent<Collider2D>());
+
+            sas.clip = ded;
+            sas.PlayOneShot(ded, 0.4f);
 
             arbys.gravityScale = 1;
             float xSpd = (float)Random.Range(-5, 6);

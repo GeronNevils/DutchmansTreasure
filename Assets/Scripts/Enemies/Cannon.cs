@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
+    AudioSource asas;
+    public AudioClip fireSound;
+
     public GameObject fireParticles;
 
     public GameObject projectile; //the cannonball
@@ -29,6 +32,8 @@ public class Cannon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        asas = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<AudioSource>();
+
         player = GameObject.FindGameObjectWithTag("Player");
         setCooldown = fireCooldown;
         setDuration = rotationDuration * 2;
@@ -84,6 +89,8 @@ public class Cannon : MonoBehaviour
                 Instantiate(fireParticles, spawnSpot.transform.position, new Quaternion(0, 0, 0, 0));
 
                 //sound
+                asas.clip = fireSound;
+                asas.PlayOneShot(fireSound, 0.3f);
 
                 cb.GetComponent<Rigidbody2D>().velocity = transform.forward * cannonBallSpeed;
             }

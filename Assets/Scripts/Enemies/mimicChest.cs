@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class mimicChest : MonoBehaviour
 {
+    AudioSource soundmaker;
+    public AudioClip soundclippy;
+
     Animator an; //animation controller
     GameObject player; //player to track
     PlayerController pl; //for calling player to disappear
@@ -16,6 +19,8 @@ public class mimicChest : MonoBehaviour
 
     private void Awake()
     {
+        soundmaker = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<AudioSource>();
+
         an = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         pl = player.GetComponent<PlayerController>();
@@ -55,6 +60,12 @@ public class mimicChest : MonoBehaviour
             an.SetBool("playerCaught", false);
             if (Vector2.Distance(transform.position, player.transform.position) < aggroDistance && pl.dead == false)
             {
+                if (aggro == false)
+                {
+                    soundmaker.clip = soundclippy;
+                    soundmaker.PlayOneShot(soundclippy, 1f);
+                }
+
                 aggro = true;
                 an.SetBool("playerNear", true);
             }

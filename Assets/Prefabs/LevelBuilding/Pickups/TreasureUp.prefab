@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad801be39339b34d92a8c7410b9bc80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickSound: {fileID: 8300000, guid: 16ccaae25327a614ab9312b688b95f11, type: 3}
   pickupParticles: {fileID: 9091547527786933336, guid: a9645131a56e0944a8716268db3c9364,
     type: 3}
   treasureValue: 100

@@ -7,6 +7,10 @@ using TMPro;
 
 public class MenuUI : MonoBehaviour
 {
+    AudioSource asasas;
+    public AudioClip clickSound;
+    public AudioClip ambience;
+
     public Camera cam;
 
     public Button startGame; //button that starts the game
@@ -29,6 +33,8 @@ public class MenuUI : MonoBehaviour
 
     private void Awake()
     {
+        asasas = GetComponent<AudioSource>();
+
         controlsText.GetComponent<TextMeshProUGUI>();
         topCtext.GetComponent<TextMeshProUGUI>();
         bottomCtext.GetComponent<TextMeshProUGUI>();
@@ -49,6 +55,9 @@ public class MenuUI : MonoBehaviour
         startGame.interactable = false; //make buttons not clickable
         controls.interactable = false;
 
+        asasas.clip = ambience;
+        asasas.PlayOneShot(ambience, 0.2f);
+
         startGameClicked = true;
     }
 
@@ -57,6 +66,8 @@ public class MenuUI : MonoBehaviour
         startGame.interactable = false; //make buttons not clickable
         controls.interactable = false;
         controlsClicked = true;
+        asasas.clip = clickSound;
+        asasas.PlayOneShot(clickSound, 0.5f);
     }
 
     // Update is called once per frame
@@ -64,6 +75,8 @@ public class MenuUI : MonoBehaviour
     {
         if (startGameClicked == true && finishedMoving == true)
         {
+            asasas.volume = asasas.volume -= 0.01f;
+
             if (fade.color.a >= 1f)
             {
                 SceneManager.LoadScene("LevelScene");
@@ -157,6 +170,8 @@ public class MenuUI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                asasas.PlayOneShot(clickSound, 0.5f);
+
                 if (slide < 3)
                     ++slide;
                 else if (slide == 3)
@@ -173,6 +188,8 @@ public class MenuUI : MonoBehaviour
 
                     startGame.interactable = true;
                     controls.interactable = true;
+
+                    slide = 0;
                 }
             }
         }

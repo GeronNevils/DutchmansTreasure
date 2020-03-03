@@ -95,6 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd4eab36e90ba47439a7b47c71a1a5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundclippy: {fileID: 8300000, guid: 804c0ac24fd5ea040a53af8e35cf7889, type: 3}
+  mimicAttackSpeed: 40
 --- !u!95 &7059666511623126320
 Animator:
   serializedVersion: 3

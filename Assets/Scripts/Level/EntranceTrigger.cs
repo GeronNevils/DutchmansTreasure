@@ -7,15 +7,19 @@ public class EntranceTrigger : MonoBehaviour
     public bool currentRoomEntrance = false;
     int cooldown = 0;
 
+    bool soundPlayed = false;
+    AudioSource audsou;
+    public AudioClip transSound;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        audsou = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && !currentRoomEntrance)
+        if (collision.gameObject.tag == "Player" && currentRoomEntrance == false)
         {
             setEntrance();
         }
@@ -25,6 +29,12 @@ public class EntranceTrigger : MonoBehaviour
     {
         cooldown = 100;
         currentRoomEntrance = true;
+        if (soundPlayed == false)
+        {
+            audsou.clip = transSound;
+            audsou.PlayOneShot(transSound, 1f);
+            soundPlayed = true;
+        }
     }
 
     // Update is called once per frame

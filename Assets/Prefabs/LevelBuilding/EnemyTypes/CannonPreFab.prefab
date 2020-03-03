@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8314aa92f388f42aaa35652c537626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireSound: {fileID: 8300000, guid: 1746ea99d15f0714cad1d59d16169722, type: 3}
   fireParticles: {fileID: 7639533212137580291, guid: 5ae3ee57be028db4f8f414e0ec2391e1,
     type: 3}
   projectile: {fileID: 4728435704945833794, guid: 58f4138fa9a06d7408060ed9167ba631,
