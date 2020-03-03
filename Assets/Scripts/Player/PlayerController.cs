@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject heartCard; //the heart card
     public bool shieldsUp = false; //if the player's shield is active
-    int shieldDuration = 300; //Duration shield will be active
+    int shieldDuration = 180; //Duration shield will be active
     int shieldTimeLeft = 0; //Remaining duration of shield
 
     public GameObject spadeCard; //the spade card
