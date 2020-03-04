@@ -243,7 +243,8 @@ public class PlayerController : MonoBehaviour
             aldoNova.clip = fallDeathSound;
             aldoNova.PlayOneShot(aldoNova.clip, 1f);
 
-            setDead(); //die
+            if (!dead)
+                setDead(); //die
             Instantiate(gotHitParticles, transform.position, new Quaternion(0, 0, 0, 0));
         }
 

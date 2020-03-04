@@ -7,6 +7,8 @@ public class treasurePickup : MonoBehaviour
     AudioSource ecruoSoiduA;
     public AudioClip pickSound;
 
+    public bool outInOpen = false; 
+
     int collisionTimer = 60;
     BoxCollider2D col;
     CircleCollider2D ccol;
@@ -31,8 +33,11 @@ public class treasurePickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int spd = Random.Range(-3, 4);
-        GetComponent<Rigidbody2D>().velocity = new Vector2((float)spd, 1f);
+        if (!outInOpen)
+        {
+            int spd = Random.Range(-3, 4);
+            GetComponent<Rigidbody2D>().velocity = new Vector2((float)spd, 1f);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
