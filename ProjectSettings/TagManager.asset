@@ -12,6 +12,7 @@ TagManager:
   - Club
   - Cannonball
   - Boss
+  - StatTracker
   layers:
   - Default
   - TransparentFX

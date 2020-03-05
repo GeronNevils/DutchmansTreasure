@@ -17,6 +17,7 @@ public class MenuUI : MonoBehaviour
     public Button controls; //button that shows the controls
 
     public Image fade; //image that will fade to black
+    bool fadingIn;
 
     public GameObject character;
 
@@ -38,6 +39,12 @@ public class MenuUI : MonoBehaviour
         controlsText.GetComponent<TextMeshProUGUI>();
         topCtext.GetComponent<TextMeshProUGUI>();
         bottomCtext.GetComponent<TextMeshProUGUI>();
+
+        Color temp = fade.color;
+        temp.a = 1f;
+        fade.color = temp;
+
+        fadingIn = true;
     }
 
     // Start is called before the first frame update
@@ -46,8 +53,8 @@ public class MenuUI : MonoBehaviour
         startGame.onClick.AddListener(beginGame);
         controls.onClick.AddListener(showControls);
 
-        startGame.interactable = true;
-        controls.interactable = true;
+        startGame.interactable = false;
+        controls.interactable = false;
     }
 
     void beginGame() //happens when startGame is clicked
@@ -73,6 +80,23 @@ public class MenuUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (fadingIn == true)
+        {
+            if (fade.color.a > 0f)
+            {
+                Color temp = fade.color;
+                temp.a -= 0.01f;
+                fade.color = temp;
+            }
+
+            if (fade.color.a <= 0.01f)
+            {
+                startGame.interactable = true;
+                controls.interactable = true;
+                fadingIn = false;
+            }
+        }
+
         if (startGameClicked == true && finishedMoving == true)
         {
             asasas.volume = asasas.volume -= 0.01f;
@@ -157,9 +181,9 @@ public class MenuUI : MonoBehaviour
             {
                 topCtext.text = "Card Effects:";
 
-                controlsText.text = "Clubs: Smashes most enemies and obstacles beneath or next to you\n\n" +
+                controlsText.text = "Clubs: Smashes most enemies and obstacles beneath or next to you. Can be canceled\n\n" +
                                     "Diamonds: Throw a card that can destroy most obstacles or enemies\n\n" +
-                                    "Hearts: Temporary shield that protects you from smaller threats\n\n" +
+                                    "Hearts: Temporary shield that protects you from smaller threats, CANNOT use other cards when active. Can be canceled\n\n" +
                                     "Spades: A trampoline or second jump\n";
             }
             else if (slide == 3)
@@ -167,7 +191,7 @@ public class MenuUI : MonoBehaviour
                 topCtext.text = "Cards:";
 
                 controlsText.text = "You begin with 52 cards, or 13 of each suit. " +
-                                    "When you run out of cards, you will have access to unlimited random cards\n\n" +
+                                    "When you run out of cards, you will have access to unlimited random cards, but they may be weaker\n\n" +
                                     "You are free to die as many times as you want\n";
             }
 

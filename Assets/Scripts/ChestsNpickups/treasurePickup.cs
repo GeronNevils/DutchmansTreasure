@@ -25,7 +25,7 @@ public class treasurePickup : MonoBehaviour
         col = GetComponent<BoxCollider2D>();
         ccol = GetComponent<CircleCollider2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-        ssr = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<StatTracker>();
+        ssr = GameObject.FindGameObjectWithTag("StatTracker").GetComponent<StatTracker>();
         Physics2D.IgnoreCollision(col, player.GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(ccol, player.GetComponent<Collider2D>());
     }

@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     int respawnDelay = 0; //The delay between death and respawn
 
     GameObject respawnPoint; //The current spot where the player will respawn
+    bool respawnSetBefore = false;
 
     GameObject spawnCard; //GameObjects to keep track of when instantiating
     GameObject spawnHitbox;
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         controlFreeze = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<GameUI>();
-        stats = GameObject.FindGameObjectWithTag("UIcontrol").GetComponent<StatTracker>();
+        stats = GameObject.FindGameObjectWithTag("StatTracker").GetComponent<StatTracker>();
 
         aldoNova = GetComponent<AudioSource>();
 
@@ -94,15 +95,26 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnTriggerStay2D(Collider2D objCollider) //collision with object
+    private void OnTriggerEnter2D(Collider2D objCollider)
     {
         if (!dead)
         {
             if (objCollider.gameObject.tag == "Respawn") //set current respawn point
             {
                 respawnPoint = objCollider.gameObject;
+                stats.addRoomPos(objCollider.gameObject.transform.parent.transform.position.x,
+                                 objCollider.gameObject.transform.parent.transform.position.y);
+
+                Destroy(objCollider);
             }
-            else if (((objCollider.gameObject.tag == "Enemy" ||
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D objCollider) //collision with object
+    {
+        if (!dead)
+        {           
+            if (((objCollider.gameObject.tag == "Enemy" ||
                       objCollider.gameObject.tag == "Cannonball")
                 && shieldsUp == false && ridingClub == false) ||
                       (objCollider.gameObject.tag == "Boss")) //hit enemy with no shield
@@ -134,7 +146,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isDead", true);
         effectCancel();
         respawnDelay = 300;
-        stats.numOfDeaths++;
+        stats.addDeath(transform.position.x, transform.position.y);      
     }
 
     void respawn(float posX, float posY) //respawn player at respawn point
@@ -491,6 +503,8 @@ public class PlayerController : MonoBehaviour
 
     public void club(bool strong) //player used a clubs suit card
     {
+        stats.addUsedCard(transform.position.x, transform.position.y, "Clubs");
+
         Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
         rb2D.velocity = new Vector2(0f, 0f);
         ridingClub = true;
@@ -502,6 +516,8 @@ public class PlayerController : MonoBehaviour
 
     public void diamond(bool strong) //diamonds suit card
     {
+        stats.addUsedCard(transform.position.x, transform.position.y, "Diamonds");
+
         Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
 
         aldoNova.clip = diamondSound;
@@ -542,6 +558,8 @@ public class PlayerController : MonoBehaviour
 
     public void heart(bool strong) //hearts suit card
     {
+        stats.addUsedCard(transform.position.x, transform.position.y, "Hearts");
+
         Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
         aldoNova.clip = heartSound;
         aldoNova.PlayOneShot(heartSound, 1f);
@@ -565,6 +583,8 @@ public class PlayerController : MonoBehaviour
 
     public void spade(bool strong) //spades suit card
     {
+        stats.addUsedCard(transform.position.x, transform.position.y, "Spades");
+
         Instantiate(useCardParticles, transform.position, new Quaternion(0, 0, 0, 0));
 
         aldoNova.clip = spadeSound;

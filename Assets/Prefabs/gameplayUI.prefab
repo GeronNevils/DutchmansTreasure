@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5654374121027268493}
   - component: {fileID: 8118128061868646440}
   m_Layer: 5
-  m_Name: Image
+  m_Name: treasureImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,14 +27,14 @@ RectTransform:
   m_GameObject: {fileID: 392832923665366128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8195179491720920856}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 326}
+  m_AnchoredPosition: {x: -26, y: 264}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5654374121027268493
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d9d1b06f87b832746addb8d1585619d1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d190b7e33105eb9409a78f9b600daadc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -103,11 +103,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8195179491720920856}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 229.6}
+  m_AnchoredPosition: {x: 110, y: 260}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3612472566672904993
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 1026
+  m_textAlignment: 1025
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -258,7 +258,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8195179491720920856}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -777,7 +777,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8195179490580981476}
   - component: {fileID: 8195179490580981477}
-  - component: {fileID: 611210613725469237}
   - component: {fileID: 2017747108230642815}
   m_Layer: 0
   m_Name: gameplayUI
@@ -826,21 +825,6 @@ MonoBehaviour:
   cardsLeft: {fileID: 8195179490216228854}
   freeze: 0
   fade: {fileID: 8195179492079760820}
---- !u!114 &611210613725469237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8195179490580981478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d810a3158b236d540ab972f8064584d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  treasureCollected: 0
-  numOfDeaths: 0
-  cardsUsed: 0
 --- !u!82 &2017747108230642815
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1044,11 +1028,11 @@ RectTransform:
   - {fileID: 8195179490935460715}
   - {fileID: 8195179490425760863}
   - {fileID: 8195179490216228852}
-  - {fileID: 8195179492079760821}
   - {fileID: 6954920776168660298}
   - {fileID: 3636798822554637802}
   - {fileID: 4124813420190005980}
   - {fileID: 3448119048010330858}
+  - {fileID: 8195179492079760821}
   m_Father: {fileID: 8195179490580981476}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1147,7 +1131,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8195179491720920856}
-  m_RootOrder: 4
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1220,7 +1204,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8195179491720920856}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

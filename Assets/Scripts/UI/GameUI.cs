@@ -30,7 +30,7 @@ public class GameUI : MonoBehaviour
     private void Awake()
     {
         conC = GameObject.FindGameObjectWithTag("Player").GetComponent<cardController>();
-        tracks = GetComponent<StatTracker>();
+        tracks = GameObject.FindGameObjectWithTag("StatTracker").GetComponent<StatTracker>();
 
         cardsLeft.GetComponent<TextMeshProUGUI>();
         deathNumber.GetComponent<TextMeshProUGUI>();
@@ -59,7 +59,7 @@ public class GameUI : MonoBehaviour
     void Update()
     {
         deathNumber.text = "" + tracks.numOfDeaths;
-        treasureNumber.text = "$" + tracks.treasureCollected;
+        treasureNumber.text = "" + tracks.treasureCollected + "g";
 
         if (freeze == false && Input.GetKeyDown(KeyCode.Backspace)) //restart level
         {
