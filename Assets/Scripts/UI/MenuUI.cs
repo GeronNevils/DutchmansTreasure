@@ -24,7 +24,7 @@ public class MenuUI : MonoBehaviour
     bool controlsClicked = false;
     int slide = 0;
 
-    public Image controlsBg;
+    public Image[] controlsBg;
     public TextMeshProUGUI controlsText;
     public TextMeshProUGUI topCtext;
     public TextMeshProUGUI bottomCtext;
@@ -119,14 +119,17 @@ public class MenuUI : MonoBehaviour
 
         if (controlsClicked == true)
         {
-            if (controlsBg.color.a < 1f)
+            for (int i = 0; i < controlsBg.Length; i++)
             {
-                Color temp = controlsBg.color;
-                temp.a = 1f;
-                controlsBg.color = temp;
-
-                bottomCtext.text = "Press Enter to Continue";
+                if (controlsBg[i].color.a < 1f)
+                {
+                    Color temp = controlsBg[i].color;
+                    temp.a = 1f;
+                    controlsBg[i].color = temp;
+                }
             }
+
+            bottomCtext.text = "Press Enter to Continue";
 
             /*
              0 - movement controls
@@ -182,9 +185,12 @@ public class MenuUI : MonoBehaviour
                     topCtext.text = "";
                     bottomCtext.text = "";
 
-                    Color temp = controlsBg.color;
-                    temp.a = 0f;
-                    controlsBg.color = temp;
+                    for (int i = 0; i < controlsBg.Length; i++)
+                    {
+                        Color temp = controlsBg[i].color;
+                        temp.a = 0f;
+                        controlsBg[i].color = temp;
+                    }
 
                     startGame.interactable = true;
                     controls.interactable = true;
