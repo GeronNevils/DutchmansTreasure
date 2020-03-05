@@ -87,6 +87,8 @@ public class PlayerController : MonoBehaviour
 
         fugginOffsets = GetComponent<Collider2D>();
         xOff = fugginOffsets.offset.x;
+
+        stats.cleanOut();
     }
 
     // Start is called before the first frame update

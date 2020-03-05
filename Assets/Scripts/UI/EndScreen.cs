@@ -18,7 +18,8 @@ public class EndScreen : MonoBehaviour
 
     StatTracker tracky;
     bool showYaMoves = false;
-    int phase = 0;
+    int phase = -1;
+    public GameObject dropShip;
     public GameObject moveableParent;
     public Image roomOutline;
     public Image cardClub;
@@ -43,7 +44,7 @@ public class EndScreen : MonoBehaviour
     public Image faderBlack;
     bool fadeIn = true;
 
-    public Image faderBlue;
+    public SpriteRenderer faderBlue;
     bool fadeOut = false;
 
     private void Awake()
@@ -139,7 +140,21 @@ public class EndScreen : MonoBehaviour
             if (drawTimer > 0)
                 drawTimer--;
 
-            if (phase == 0)
+            if (phase == -1)
+            {
+                if (dropShip.transform.position.y > 28.5f)
+                {
+                    dropShip.transform.position = new Vector3(dropShip.transform.position.x,
+                                                              dropShip.transform.position.y - 2f, 0);
+                }
+                else if (dropShip.transform.position.y <= 28.5f)
+                {
+                    asdf.clip = showOutlines;
+                    asdf.PlayOneShot(showOutlines, 0.3f);
+                    phase++;
+                }
+            }
+            else if (phase == 0)
             {
                 //draw room outlines:
                 if (drawTimer <= 0)
@@ -151,8 +166,6 @@ public class EndScreen : MonoBehaviour
                         c.transform.localPosition = new Vector3(tracky.roomCoordinates[i].x, tracky.roomCoordinates[i].y, 0);
                         c.transform.localRotation = new Quaternion(0, 0, 0, 0);
                     }
-                    asdf.clip = showOutlines;
-                    asdf.PlayOneShot(showOutlines, 0.3f);
 
                     phase++;
                     setDrawTimer();

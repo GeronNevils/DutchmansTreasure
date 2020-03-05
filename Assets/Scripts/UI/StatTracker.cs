@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DeathLoc
 {
@@ -31,8 +30,6 @@ public class CardLoc
 
 public class StatTracker : MonoBehaviour
 {
-    Scene sceney;
-
     public static StatTracker instance;
 
     public int treasureCollected = 0;
@@ -80,7 +77,7 @@ public class StatTracker : MonoBehaviour
         }
     }
 
-    void cleanOut()
+    public void cleanOut()
     {
         treasureCollected = 0;
         numOfDeaths = 0;
@@ -94,9 +91,6 @@ public class StatTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sceney = SceneManager.GetActiveScene();
-
-        if (sceney.name == "MenuScene")
-            cleanOut();
+        
     }
 }
