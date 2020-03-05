@@ -253,14 +253,18 @@ public class PlayerController : MonoBehaviour
             respawn(respawnPoint.transform.position.x, respawnPoint.transform.position.y);
         }
 
-        if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad3)) && cardActive == true) //cancel current card effects
+        if ((Input.GetKeyDown("l") || 
+             Input.GetKeyDown(KeyCode.Keypad3) ||
+             Input.GetMouseButtonDown(1)) && cardActive == true) //cancel current card effects
         {
             Instantiate(discardParticles, transform.position, new Quaternion(0, 0, 0, 0));
             effectCancel();
             aldoNova.clip = discardSound;
             aldoNova.PlayOneShot(discardSound, 1f);
         }
-        else if ((Input.GetKeyDown("l") || Input.GetKeyDown(KeyCode.Keypad3)) && cardActive == false && !controlFreeze.freeze) //discard card
+        else if ((Input.GetKeyDown("l") || 
+                  Input.GetKeyDown(KeyCode.Keypad3) ||
+                  Input.GetMouseButtonDown(1)) && cardActive == false && !controlFreeze.freeze) //discard card
         {
             Instantiate(discardParticles, transform.position, new Quaternion(0, 0, 0, 0));
             cardCon.discard();

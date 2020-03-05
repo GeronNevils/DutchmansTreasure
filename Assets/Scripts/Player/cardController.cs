@@ -65,7 +65,9 @@ public class cardController : MonoBehaviour
 
         if (playerCon.dead == false && !controlFreeze.freeze)
         {
-            if ((Input.GetKeyDown("k") || Input.GetKeyDown(KeyCode.Keypad1)) && deck.Count > 0 && playerCon.cardActive == false) //use a card
+            if ((Input.GetKeyDown("k") || 
+                 Input.GetKeyDown(KeyCode.Keypad1) ||
+                 Input.GetMouseButtonDown(0)) && deck.Count > 0 && playerCon.cardActive == false) //use a card
             {
                 sttr.cardsUsed++;
                 //could also add something to store coordinates where cards were used here,
@@ -90,7 +92,9 @@ public class cardController : MonoBehaviour
 
                 deck.RemoveAt(0); //get rid of the used card
             }
-            else if ((Input.GetKeyDown("k") || Input.GetKeyDown(KeyCode.Keypad1)) && deck.Count < 1 && playerCon.cardActive == false && currentCooldown <= 0) //use a joker
+            else if ((Input.GetKeyDown("k") || 
+                      Input.GetKeyDown(KeyCode.Keypad1) ||
+                      Input.GetMouseButtonDown(0)) && deck.Count < 1 && playerCon.cardActive == false && currentCooldown <= 0) //use a joker
             { //add NumPad 3 input
                 sttr.cardsUsed++;
                 playerCon.joker();

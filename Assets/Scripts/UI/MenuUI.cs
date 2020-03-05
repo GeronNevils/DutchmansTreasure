@@ -144,14 +144,14 @@ public class MenuUI : MonoBehaviour
 
                 controlsText.text = "A/D or Left Arrow/Right Arrow: Move left/right\n\n" +
                                     "W or Up Arrow: Jump\n\n" +
-                                    "O or NumPad 5: Open treasure chest\n";
+                                    "O, NumPad 5, or Middle-Click: Open treasure chest\n";
             }
             else if (slide == 1)
             {
                 topCtext.text = "Controls:";
 
-                controlsText.text = "K or NumPad1: Use card\n\n" +
-                                    "L or NumPad3: Discard current card/cancel current card effect\n\n";
+                controlsText.text = "K, NumPad1, or Left-Click: Use card\n\n" +
+                                    "L, NumPad3, or Right-Click: Discard current card/cancel current card effect\n\n";
             }
             else if (slide == 2)
             {

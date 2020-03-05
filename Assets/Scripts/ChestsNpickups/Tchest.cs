@@ -32,7 +32,7 @@ public class Tchest : MonoBehaviour
     {
         //if the player is touching the treasure chest and hits one of the open keys
         if (co.gameObject.tag == ("Player") && open == false &&
-            (Input.GetKeyDown("o") || Input.GetKeyDown(KeyCode.Keypad5)))
+            (Input.GetKeyDown("o") || Input.GetKeyDown(KeyCode.Keypad5) || Input.GetMouseButtonDown(2)))
         {
             Instantiate(pickupParticles, transform.position, new Quaternion(0, 0, 0, 0));
             dropLoot();
