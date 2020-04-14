@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     float jumpSpeed = 5.7f; //Vertical speed applied when jumping;
 
     int respawnDelay = 0; //The delay between death and respawn
+    int coyoteTime = 0;
 
     GameObject respawnPoint; //The current spot where the player will respawn
     bool respawnSetBefore = false;
@@ -250,6 +251,9 @@ public class PlayerController : MonoBehaviour
         {
             onGround = false;
             anim.SetBool("isGrounded", false);
+
+            if (coyoteTime > 0)
+                coyoteTime--;
         }
 
         if (onGround && rb2D.velocity.y < -9f && !ridingClub) //hit ground too fast
@@ -324,10 +328,13 @@ public class PlayerController : MonoBehaviour
         }
         else if (onGround && !ridingClub && !dead && !controlFreeze.freeze) //player is on the ground, and not dead
         {
+            coyoteTime = 11;
+
             if (Input.GetKeyDown("up") || Input.GetKeyDown("w")) //jump pressed
             {
                 rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
                 anim.SetBool("isGrounded", false);
+                coyoteTime = 0;
             }
 
             if ((Input.GetKey("left") || Input.GetKey("a")) && //both left and right are pressed
@@ -398,6 +405,13 @@ public class PlayerController : MonoBehaviour
         }
         else if (!onGround && !ridingClub && !dead && !controlFreeze.freeze) //player is not on the ground, and is not on a club card
         {
+            if ((Input.GetKeyDown("up") || Input.GetKeyDown("w")) && coyoteTime > 0) //jump pressed with coyote time active
+            {
+                rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
+                anim.SetBool("isGrounded", false);
+                coyoteTime = 0;
+            }
+
             if ((Input.GetKey("left") || Input.GetKey("a")) && //both left and right are pressed
                 (Input.GetKey("right") || Input.GetKey("d")))
             {

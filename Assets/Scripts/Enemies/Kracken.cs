@@ -8,6 +8,8 @@ public class Kracken : MonoBehaviour
     public GameObject moveTowards; //spot to move to for attacking
     public float attackSpeed = 5f;
 
+    bool aggressed = false;
+
     Vector3 orgPosition;
 
     GameObject player; //target
@@ -33,13 +35,21 @@ public class Kracken : MonoBehaviour
     void Update()
     {
         if (detector.playerInRange) //player in range
+            aggressed = true;
+
+        if (aggressed) //Attack
         {
             //move and attack
             animate.SetBool("playerClose", true);
 
             transform.position = Vector2.MoveTowards(transform.position, moveTowards.transform.position, attackSpeed * Time.deltaTime);
+
+            if (Vector2.Distance(transform.position, moveTowards.transform.position) < 0.1f)
+            {
+                aggressed = false;
+            }
         }
-        else //player out of range
+        else //Retreat
         {
             //go back into hiding
             animate.SetBool("playerClose", false);

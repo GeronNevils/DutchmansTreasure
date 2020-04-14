@@ -15,6 +15,7 @@ public class MenuUI : MonoBehaviour
 
     public Button startGame; //button that starts the game
     public Button controls; //button that shows the controls
+    public Button tutorial; //tutorial button
 
     public Image fade; //image that will fade to black
     bool fadingIn;
@@ -45,22 +46,32 @@ public class MenuUI : MonoBehaviour
         fade.color = temp;
 
         fadingIn = true;
+
+        startGame.onClick.AddListener(beginGame);
+        controls.onClick.AddListener(showControls);
+        tutorial.onClick.AddListener(startTutorial);
+
+        startGame.interactable = false;
+        controls.interactable = false;
+        tutorial.interactable = false;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        startGame.onClick.AddListener(beginGame);
-        controls.onClick.AddListener(showControls);
+        
+    }
 
-        startGame.interactable = false;
-        controls.interactable = false;
+    void startTutorial()
+    {
+        Debug.Log("Tutorial here");
     }
 
     void beginGame() //happens when startGame is clicked
     {
         startGame.interactable = false; //make buttons not clickable
         controls.interactable = false;
+        tutorial.interactable = false;
 
         asasas.clip = ambience;
         asasas.PlayOneShot(ambience, 0.2f);
@@ -72,6 +83,7 @@ public class MenuUI : MonoBehaviour
     {
         startGame.interactable = false; //make buttons not clickable
         controls.interactable = false;
+        tutorial.interactable = false;
         controlsClicked = true;
         asasas.clip = clickSound;
         asasas.PlayOneShot(clickSound, 0.5f);
@@ -88,11 +100,23 @@ public class MenuUI : MonoBehaviour
                 temp.a -= 0.01f;
                 fade.color = temp;
             }
-
+            
+            if (startGame.transform.position.x < 0.4032f)
+            {
+                startGame.transform.position = new Vector3(startGame.transform.position.x + 1f, startGame.transform.position.y, 0);
+                controls.transform.position = new Vector3(controls.transform.position.x + 1f, controls.transform.position.y, 0);
+                tutorial.transform.position = new Vector3(tutorial.transform.position.x + 1f, tutorial.transform.position.y, 0);
+            }
+            
             if (fade.color.a <= 0.01f)
             {
+                startGame.transform.position = new Vector3(0.4032f, startGame.transform.position.y, 0);
+                controls.transform.position = new Vector3(0.4032f, controls.transform.position.y, 0);
+                tutorial.transform.position = new Vector3(0.4032f, tutorial.transform.position.y, 0);
+
                 startGame.interactable = true;
                 controls.interactable = true;
+                tutorial.interactable = true;
                 fadingIn = false;
             }
         }
@@ -117,6 +141,10 @@ public class MenuUI : MonoBehaviour
         }
         else if (startGameClicked == true && finishedMoving == false)
         {
+            startGame.transform.position = new Vector3(startGame.transform.position.x - 0.4f, startGame.transform.position.y, 0);
+            controls.transform.position = new Vector3(controls.transform.position.x - 0.4f, controls.transform.position.y, 0);
+            tutorial.transform.position = new Vector3(tutorial.transform.position.x - 0.4f, tutorial.transform.position.y, 0);
+
             //27.62
             if (character.transform.position.x < 34.6)
             {
@@ -175,7 +203,7 @@ public class MenuUI : MonoBehaviour
                 topCtext.text = "Controls:";
 
                 controlsText.text = "K, NumPad1, or Left-Click: Use card\n\n" +
-                                    "L, NumPad3, or Right-Click: Discard current card/cancel current card effect\n\n";
+                                    "L, NumPad3, or Right-Click: Discard current card to back of deck, or cancel current card effect\n";
             }
             else if (slide == 2)
             {
@@ -218,6 +246,7 @@ public class MenuUI : MonoBehaviour
 
                     startGame.interactable = true;
                     controls.interactable = true;
+                    tutorial.interactable = true;
 
                     slide = 0;
                 }

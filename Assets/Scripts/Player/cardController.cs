@@ -20,6 +20,8 @@ public class cardController : MonoBehaviour
 
     GameUI controlFreeze;
 
+    public bool isTutorial = false;
+
     public List<Card> deck = new List<Card>();
     string[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
 
@@ -51,6 +53,7 @@ public class cardController : MonoBehaviour
     {
         if (deck.Count > 0)
         {
+            deck.Add(deck[0]);
             deck.RemoveAt(0);
         }
     }
