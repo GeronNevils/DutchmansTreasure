@@ -24,6 +24,7 @@ public class MenuUI : MonoBehaviour
 
     bool startGameClicked = false; //if one of the buttons has been clicked
     bool controlsClicked = false;
+    bool tutorialClicked = false;
     int slide = 0;
 
     public Image[] controlsBg;
@@ -64,7 +65,11 @@ public class MenuUI : MonoBehaviour
 
     void startTutorial()
     {
-        Debug.Log("Tutorial here");
+        startGame.interactable = false; //make buttons not clickable
+        controls.interactable = false;
+        tutorial.interactable = false;
+
+        tutorialClicked = true;
     }
 
     void beginGame() //happens when startGame is clicked
@@ -121,6 +126,27 @@ public class MenuUI : MonoBehaviour
             }
         }
 
+        if (tutorialClicked == true)
+        {
+            startGame.transform.position = new Vector3(startGame.transform.position.x, startGame.transform.position.y - 1f, 0);
+            controls.transform.position = new Vector3(controls.transform.position.x, controls.transform.position.y - 1f, 0);
+            tutorial.transform.position = new Vector3(tutorial.transform.position.x, tutorial.transform.position.y - 1f, 0);
+
+            if (fade.color.a >= 1f)
+            {
+                SceneManager.LoadScene("TutorialScene");
+            }
+
+            if (fade.color.a < 1f)
+            {
+                Color temp = fade.color;
+                temp.a += 0.01f;
+                fade.color = temp;
+
+                cam.orthographicSize = (cam.orthographicSize + 0.01f);
+            }
+        }
+
         if (startGameClicked == true && finishedMoving == true)
         {
             asasas.volume = asasas.volume -= 0.01f;
@@ -141,9 +167,9 @@ public class MenuUI : MonoBehaviour
         }
         else if (startGameClicked == true && finishedMoving == false)
         {
-            startGame.transform.position = new Vector3(startGame.transform.position.x - 0.4f, startGame.transform.position.y, 0);
-            controls.transform.position = new Vector3(controls.transform.position.x - 0.4f, controls.transform.position.y, 0);
-            tutorial.transform.position = new Vector3(tutorial.transform.position.x - 0.4f, tutorial.transform.position.y, 0);
+            startGame.transform.position = new Vector3(startGame.transform.position.x, startGame.transform.position.y + 1f, 0);
+            controls.transform.position = new Vector3(controls.transform.position.x, controls.transform.position.y + 1f, 0);
+            tutorial.transform.position = new Vector3(tutorial.transform.position.x, tutorial.transform.position.y + 1f, 0);
 
             //27.62
             if (character.transform.position.x < 34.6)

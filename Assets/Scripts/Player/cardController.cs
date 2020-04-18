@@ -92,7 +92,7 @@ public class cardController : MonoBehaviour
             else if ((Input.GetKeyDown("k") || 
                       Input.GetKeyDown(KeyCode.Keypad1) ||
                       Input.GetMouseButtonDown(0)) && deck.Count < 1 && playerCon.cardActive == false && currentCooldown <= 0) //use a joker
-            { //add NumPad 3 input
+            { 
                 playerCon.joker();
                 currentCooldown = jokerCooldown;
             }

@@ -63,7 +63,7 @@ public class GameUI : MonoBehaviour
 
         if (freeze == false && Input.GetKeyDown(KeyCode.Backspace)) //restart level
         {
-            SceneManager.LoadScene("LevelScene");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         if (freeze == false && Input.GetKeyDown(KeyCode.Escape)) //quit to menu
@@ -98,7 +98,22 @@ public class GameUI : MonoBehaviour
         if (fade.color.a > 0.99f && quit == true && exitt.GetComponent<ExitTrigger>().gameFinished == false)
             SceneManager.LoadScene("MenuScene");
         else if (fade.color.a > 0.99f && quit == true && exitt.GetComponent<ExitTrigger>().gameFinished == true)
-            SceneManager.LoadScene("CutScene");
+        {
+            Scene currentScn = SceneManager.GetActiveScene();
+
+            switch (currentScn.name)
+            {
+                case "LevelScene":
+                    SceneManager.LoadScene("SequelScene");
+                    break;
+                case "SequelScene":
+                    SceneManager.LoadScene("CutScene");
+                    break;
+                case "TutorialScene":
+                    SceneManager.LoadScene("MenuScene");
+                    break;
+            }
+        }
 
         cardsLeft.text = "" + conC.deck.Count;
 
