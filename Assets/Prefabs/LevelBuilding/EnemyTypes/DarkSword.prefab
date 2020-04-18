@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3250375728936282135}
   - component: {fileID: 418123821326017237}
   m_Layer: 0
-  m_Name: Sword
+  m_Name: DarkSword
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: -1310466051
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f28851a564f375548aa0631b5896ac11, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dfc83f607947f054f8780bd8dbc9fe1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -117,10 +117,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swords:
-  - {fileID: 21300000, guid: f28851a564f375548aa0631b5896ac11, type: 3}
-  - {fileID: 21300000, guid: 159d0ee247307b74da396ef0733e25cf, type: 3}
-  - {fileID: 21300000, guid: eff6c2b505df3fa4fb7b32ee9965eeaa, type: 3}
-  - {fileID: 21300000, guid: 6d9f503672b18e543b7c62a8d69d3523, type: 3}
+  - {fileID: 21300000, guid: dfc83f607947f054f8780bd8dbc9fe1d, type: 3}
+  - {fileID: 21300000, guid: 410fcd83e7766174ba37d2a90df6ffd1, type: 3}
+  - {fileID: 21300000, guid: b405ccac39f65bf4990cd883e168bd04, type: 3}
+  - {fileID: 21300000, guid: 440274f564b09034396c2545fd10ff1f, type: 3}
+  - {fileID: 21300000, guid: d929653f13b8cb9458715ae8e8e9ac67, type: 3}
   followPath: 0
   spinAround: 0
   moveSpeed: 0
