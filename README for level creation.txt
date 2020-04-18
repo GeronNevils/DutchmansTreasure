@@ -14,3 +14,5 @@
 -Enemies and obstacles MUST have a rigidbody2D component to detect collision with the club effect
 
 -Chains, for whatever reason, can NOT be child objects of the chain parent collider object.
+
+-Rotating cannons should have fire cooldown set equal to rotation duration

@@ -19,7 +19,9 @@ public class EntranceTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && currentRoomEntrance == false)
+        if (collision.gameObject.tag == "Player" && 
+            currentRoomEntrance == false &&
+            collision.gameObject.GetComponent<PlayerController>().dead == false)
         {
             setEntrance();
         }

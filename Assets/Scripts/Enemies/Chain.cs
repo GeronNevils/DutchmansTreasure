@@ -8,6 +8,7 @@ public class Chain : MonoBehaviour
     bool die;
     int dieTimer = 200;
 
+    float spnSpd;
 
     private void Awake()
     {
@@ -18,14 +19,21 @@ public class Chain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        int a = Random.Range(0, 2);
+        if (a == 0)
+            spnSpd = 250;
+        else
+            spnSpd = -250;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (die == true && dieTimer > 0)
+        {
             dieTimer--;
+            transform.Rotate(0, 0, spnSpd * Time.deltaTime); //spin
+        }
 
         if (die == true && dieTimer == 0)
             Destroy(gameObject);

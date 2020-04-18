@@ -27,7 +27,7 @@ public class Cannon : MonoBehaviour
 
     GameObject player; //player to track
     float currentDistance;
-    float maxDistance = 27f;
+    float maxDistance = 23f;
 
     // Start is called before the first frame update
     void Start()

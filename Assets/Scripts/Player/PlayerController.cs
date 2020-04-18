@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!dead)
         {
-            if (objCollider.gameObject.tag == "Respawn") //set current respawn point
+            if (objCollider.gameObject.tag == "Respawn" && !dead) //set current respawn point
             {
                 respawnPoint = objCollider.gameObject;
                 stats.addRoomPos(objCollider.gameObject.transform.parent.transform.position.x,
@@ -110,6 +110,14 @@ public class PlayerController : MonoBehaviour
 
                 Destroy(objCollider);
             }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == ("heckingMove"))
+        {
+            transform.parent = null;
         }
     }
 
@@ -133,6 +141,10 @@ public class PlayerController : MonoBehaviour
             else if (objCollider.gameObject.tag == "KillZone") //hit out-of-bounds
             {
                 setDead(); //die
+            }
+            else if (objCollider.gameObject.tag == "heckingMove")
+            {
+                transform.parent = objCollider.transform;
             }
         }
     }
