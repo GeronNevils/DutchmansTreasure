@@ -21,6 +21,7 @@ public class cardController : MonoBehaviour
     GameUI controlFreeze;
 
     public bool isTutorial = false;
+    int setCardToRoom = 1;
 
     public List<Card> deck = new List<Card>();
     string[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
@@ -47,6 +48,42 @@ public class cardController : MonoBehaviour
     void Start()
     {
 
+    }
+
+    public void setTutorialCards()
+    {
+        deck.Clear();
+
+        switch (setCardToRoom)
+        {
+            case 1: case 2: case 7: //give all 4 cards
+                for (int j = 0; j < suits.Length; j++)
+                {
+                    Card d = new Card(suits[j], 1);
+                    deck.Add(d);
+                }
+                break;
+            case 3: //club
+                Card c = new Card(suits[0], 1);
+                deck.Add(c);
+                break;
+            case 4: //diamond
+                Card b = new Card(suits[1], 1);
+                deck.Add(b);
+                break;
+            case 5: //heart
+                Card a = new Card(suits[2], 1);
+                deck.Add(a);
+                break;
+            case 6: //spade
+                Card f = new Card(suits[3], 1);
+                deck.Add(f);
+                break;
+            case 8: //none (joker)
+                break;
+        }
+
+        setCardToRoom++;
     }
 
     public void discard()
@@ -87,7 +124,13 @@ public class cardController : MonoBehaviour
                     playerCon.spade(true);
                 }
 
-                deck.RemoveAt(0); //get rid of the used card
+                if (!isTutorial)
+                    deck.RemoveAt(0); //get rid of the used card
+                else
+                {
+                    deck.Add(deck[0]);
+                    deck.RemoveAt(0);
+                }
             }
             else if ((Input.GetKeyDown("k") || 
                       Input.GetKeyDown(KeyCode.Keypad1) ||

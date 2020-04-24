@@ -246,7 +246,7 @@ public class EndScreen : MonoBehaviour
 
                     congratsText.text = "You've Done It!";
                     statsText.text = "Treasure Collected: " + tracky.treasureCollected + "g\n" +
-                                     "        Cards Used: " + tracky.cardsUsed + "\n" +
+                                     "  Total Cards Used: " + tracky.cardsUsed + "\n" +
                                      "      Total Deaths: " + tracky.numOfDeaths;
 
                     continueText.text = "Press Enter to Continue";

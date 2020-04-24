@@ -16,6 +16,8 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI deathNumber;
     public TextMeshProUGUI treasureNumber;
 
+    public int roomsInLevel = 13;
+
     cardController conC;
 
     StatTracker tracks;
@@ -59,7 +61,14 @@ public class GameUI : MonoBehaviour
     void Update()
     {
         deathNumber.text = "" + tracks.numOfDeaths;
-        treasureNumber.text = "" + tracks.treasureCollected + "g";
+
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentRoom <= roomsInLevel)
+        {
+            treasureNumber.text = "" + tracks.treasureCollected + "g"
+                + "            Room " + GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentRoom + "/" + roomsInLevel;
+        }
+        else
+            treasureNumber.text = "" + tracks.treasureCollected + "g";
 
         if (freeze == false && Input.GetKeyDown(KeyCode.Backspace)) //restart level
         {

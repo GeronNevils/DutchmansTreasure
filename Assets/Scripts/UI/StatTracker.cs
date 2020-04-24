@@ -35,7 +35,11 @@ public class StatTracker : MonoBehaviour
     public int treasureCollected = 0;
     public int numOfDeaths = 0;
     public int cardsUsed = 0;
-    //int totalTime;
+
+    int storeTreasure = 0;
+    int storeDeaths = 0;
+    int storeCards = 0;
+    bool stuffSaved = false;
 
     public List<DeathLoc> deds = new List<DeathLoc>();
     public List<CardLoc> cerds = new List<CardLoc>();
@@ -77,15 +81,47 @@ public class StatTracker : MonoBehaviour
         }
     }
 
+    public void secondLvlClean()
+    {
+        if (!stuffSaved)
+        {
+            storeTreasure = treasureCollected;
+            storeDeaths = numOfDeaths;
+            storeCards = cardsUsed;
+
+            deds.Clear();
+            cerds.Clear();
+            roomCoordinates.Clear();
+
+            stuffSaved = true;
+        }
+        else
+        {
+            treasureCollected = storeTreasure;
+            numOfDeaths = storeDeaths;
+            cardsUsed = storeCards;
+
+            deds.Clear();
+            cerds.Clear();
+            roomCoordinates.Clear();
+        }
+    }
+
     public void cleanOut()
     {
         treasureCollected = 0;
         numOfDeaths = 0;
         cardsUsed = 0;
 
+        storeTreasure = 0;
+        storeDeaths = 0;
+        storeCards = 0;
+
         deds.Clear();
         cerds.Clear();
         roomCoordinates.Clear();
+
+        stuffSaved = false;
     }
 
     // Update is called once per frame

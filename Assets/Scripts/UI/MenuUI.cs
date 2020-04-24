@@ -174,7 +174,7 @@ public class MenuUI : MonoBehaviour
             //27.62
             if (character.transform.position.x < 34.6)
             {
-                character.transform.position = new Vector2((character.transform.position.x + 0.1f),
+                character.transform.position = new Vector2((character.transform.position.x + 0.125f),
                                                            character.transform.position.y);
             }
             else if (character.transform.position.x > 34.6)

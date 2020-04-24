@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -75,6 +76,8 @@ public class PlayerController : MonoBehaviour
     Collider2D fugginOffsets;
     float xOff;
 
+    public int currentRoom = 0;
+
     void Awake()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -89,7 +92,12 @@ public class PlayerController : MonoBehaviour
         fugginOffsets = GetComponent<Collider2D>();
         xOff = fugginOffsets.offset.x;
 
-        stats.cleanOut();
+        currentRoom = 0;
+
+        if (SceneManager.GetActiveScene().name == "SequelScene")
+            stats.secondLvlClean();
+        else
+            stats.cleanOut();
     }
 
     // Start is called before the first frame update
@@ -102,13 +110,18 @@ public class PlayerController : MonoBehaviour
     {
         if (!dead)
         {
-            if (objCollider.gameObject.tag == "Respawn" && !dead) //set current respawn point
+            if (objCollider.gameObject.tag == "Respawn") //set current respawn point
             {
+                currentRoom++;
+
                 respawnPoint = objCollider.gameObject;
                 stats.addRoomPos(objCollider.gameObject.transform.parent.transform.position.x,
                                  objCollider.gameObject.transform.parent.transform.position.y);
 
                 Destroy(objCollider);
+
+                if (cardCon.isTutorial == true)
+                    cardCon.setTutorialCards();
             }
         }
     }
