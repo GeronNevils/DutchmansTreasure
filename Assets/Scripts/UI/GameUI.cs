@@ -7,6 +7,8 @@ using TMPro;
 
 public class GameUI : MonoBehaviour
 {
+    bool showLevel1Stats = false;
+
     public GameObject exitt;
 
     public Image currentCard;
@@ -60,6 +62,13 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (showLevel1Stats == true &&
+            GameObject.FindGameObjectWithTag("level1stat").GetComponent<DrawStat>().isDoneDrawing == true &&
+            Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneManager.LoadScene("SequelScene");
+        }
+
         deathNumber.text = "" + tracks.numOfDeaths;
 
         if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentRoom <= roomsInLevel)
@@ -113,7 +122,9 @@ public class GameUI : MonoBehaviour
             switch (currentScn.name)
             {
                 case "LevelScene":
-                    SceneManager.LoadScene("SequelScene");
+                    //SceneManager.LoadScene("SequelScene");
+                    GameObject.FindGameObjectWithTag("level1stat").GetComponent<DrawStat>().okGo();
+                    showLevel1Stats = true;
                     break;
                 case "SequelScene":
                     SceneManager.LoadScene("CutScene");
