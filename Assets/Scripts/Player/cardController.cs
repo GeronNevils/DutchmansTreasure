@@ -88,7 +88,7 @@ public class cardController : MonoBehaviour
 
     public void discard()
     {
-        if (deck.Count > 0)
+        if (deck.Count > 0 && !controlFreeze.freeze)
         {
             deck.Add(deck[0]);
             deck.RemoveAt(0);

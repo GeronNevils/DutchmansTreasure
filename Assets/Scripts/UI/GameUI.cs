@@ -13,10 +13,17 @@ public class GameUI : MonoBehaviour
 
     public Image currentCard;
 
+    public Image[] pauseBg;
+
     public Sprite[] cardPics;
 
     public TextMeshProUGUI deathNumber;
     public TextMeshProUGUI treasureNumber;
+    public TextMeshProUGUI pauseText;
+
+    bool paused = false;
+    public Button yesQuit;
+    public Button noQuit;
 
     public int roomsInLevel = 13;
 
@@ -38,7 +45,14 @@ public class GameUI : MonoBehaviour
 
         cardsLeft.GetComponent<TextMeshProUGUI>();
         deathNumber.GetComponent<TextMeshProUGUI>();
+        pauseText.GetComponent<TextMeshProUGUI>();
         treasureNumber.GetComponent<TextMeshProUGUI>();
+
+        yesQuit.onClick.AddListener(QuitToMenu);
+        noQuit.onClick.AddListener(unPause);
+
+        yesQuit.interactable = false;
+        noQuit.interactable = false;
 
         freeze = true;
         quit = false;
@@ -46,12 +60,75 @@ public class GameUI : MonoBehaviour
         Color temp = fade.color;
         temp.a = 1f;
         fade.color = temp;
+
+        for (int i = 0; i < pauseBg.Length; i++)
+        {
+            Color emp = pauseBg[i].color;
+            emp.a = 0f;
+            pauseBg[i].color = emp;
+        }
+
+        pauseText.text = "";
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
+    }
+
+    void QuitToMenu() //quit to menu, duh
+    {
+        yesQuit.interactable = false;
+        noQuit.interactable = false;
+
+        pauseText.text = "";
+
+        for (int i = 0; i < pauseBg.Length; i++)
+        {
+            Color emp = pauseBg[i].color;
+            emp.a = 0f;
+            pauseBg[i].color = emp;
+        }
+
+        quit = true;
+        freeze = true;
+    }
+
+    void setPause()
+    {
+        paused = true;
+        freeze = true;
+
+        for (int i = 0; i < pauseBg.Length; i++)
+        {
+            Color emp = pauseBg[i].color;
+            emp.a = 1f;
+            pauseBg[i].color = emp;
+        }
+
+        pauseText.text = "Quit to Menu?\n" + "Y   /   N";
+
+        yesQuit.interactable = true;
+        noQuit.interactable = true;
+    }
+
+    void unPause() 
+    {
+        yesQuit.interactable = false;
+        noQuit.interactable = false;
+
+        pauseText.text = "";
+
+        for (int i = 0; i < pauseBg.Length; i++)
+        {
+            Color emp = pauseBg[i].color;
+            emp.a = 0f;
+            pauseBg[i].color = emp;
+        }
+
+        paused = false;
+        freeze = false;
     }
 
     void unFreeze()
@@ -84,11 +161,19 @@ public class GameUI : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        if (freeze == false && Input.GetKeyDown(KeyCode.Escape)) //quit to menu
+        if (freeze == false && paused == false && Input.GetKeyDown(KeyCode.Escape)) //pressed escape
         {
-            quit = true;
-            freeze = true;
+            setPause();
         }
+        else if (paused == true && Input.GetKeyDown(KeyCode.Escape)) //unpause
+        {
+            unPause();
+        }
+
+        if (paused == true && Input.GetKeyDown(KeyCode.Y))
+            QuitToMenu();
+        else if (paused == true && Input.GetKeyDown(KeyCode.N))
+            unPause();
 
         if (exitt.GetComponent<ExitTrigger>().gameFinished == true) //game finished
         {
@@ -103,7 +188,7 @@ public class GameUI : MonoBehaviour
             fade.color = temp;
         }
 
-        if (fade.color.a < 0.01f && freeze == true && quit == false)
+        if (fade.color.a < 0.01f && freeze == true && quit == false && paused == false)
             unFreeze();
 
         if (fade.color.a < 1f && quit == true)

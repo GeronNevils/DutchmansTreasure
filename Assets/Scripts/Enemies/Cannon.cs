@@ -25,6 +25,10 @@ public class Cannon : MonoBehaviour
 
     public bool trackPlayer = false; //aim at the player
 
+    public bool onlyFireWhenPlayerVisible = false;
+    RaycastHit2D hit;
+    bool canSeePlayer;
+
     GameObject player; //player to track
     float currentDistance;
     float maxDistance = 23f;
@@ -47,6 +51,16 @@ public class Cannon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hit = Physics2D.Linecast(transform.position, player.transform.position);
+
+        if (hit != false)
+        {
+            if (hit.collider.gameObject.tag == ("Player"))
+                canSeePlayer = true;
+            else
+                canSeePlayer = false;
+        }
+
         currentDistance = Vector2.Distance(transform.position, player.transform.position);
 
         if (currentDistance < maxDistance)
@@ -79,7 +93,7 @@ public class Cannon : MonoBehaviour
                 transform.LookAt(player.transform);
             }
             
-            if (fireCooldown <= 0)
+            if (fireCooldown <= 0 && !onlyFireWhenPlayerVisible)
             {
                 fireCooldown = setCooldown;
 
@@ -93,6 +107,24 @@ public class Cannon : MonoBehaviour
                 asas.PlayOneShot(fireSound, 0.3f);
 
                 cb.GetComponent<Rigidbody2D>().velocity = transform.forward * cannonBallSpeed;
+            }
+            else if (fireCooldown <= 0 && onlyFireWhenPlayerVisible == true)
+            {
+                if (canSeePlayer == true)
+                {
+                    fireCooldown = setCooldown;
+
+                    GameObject cb = Instantiate(projectile, spawnSpot.transform.position, new Quaternion(0, 0, 0, 0));
+
+                    //particles
+                    Instantiate(fireParticles, spawnSpot.transform.position, new Quaternion(0, 0, 0, 0));
+
+                    //sound
+                    asas.clip = fireSound;
+                    asas.PlayOneShot(fireSound, 0.3f);
+
+                    cb.GetComponent<Rigidbody2D>().velocity = transform.forward * cannonBallSpeed;
+                }
             }
         }
     }
