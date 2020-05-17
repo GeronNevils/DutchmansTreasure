@@ -63,7 +63,7 @@ public class Cannon : MonoBehaviour
 
         currentDistance = Vector2.Distance(transform.position, player.transform.position);
 
-        if (currentDistance < maxDistance)
+        if (currentDistance < maxDistance && !player.GetComponent<PlayerController>().cannonsShutTheFuckUp)
         {
             if (rotationDuration > 0)
                 rotationDuration--;

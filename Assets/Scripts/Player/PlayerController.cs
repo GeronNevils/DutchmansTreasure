@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool cannonsShutTheFuckUp = false;
+
     AudioSource aldoNova;
     public AudioClip fallDeathSound;
     public AudioClip hitDeathSound;
@@ -222,6 +224,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!cannonsShutTheFuckUp)
+            if (currentRoom > controlFreeze.roomsInLevel)
+                cannonsShutTheFuckUp = true;
+
         if (sr.flipX == true)
         {
             fugginOffsets.offset = new Vector2((xOff * -1), fugginOffsets.offset.y);

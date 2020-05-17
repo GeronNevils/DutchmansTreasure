@@ -32,6 +32,8 @@ public class MenuUI : MonoBehaviour
     public TextMeshProUGUI topCtext;
     public TextMeshProUGUI bottomCtext;
 
+    public TextMeshProUGUI creditText;
+
     bool finishedMoving = false;
 
     private void Awake()
@@ -41,6 +43,8 @@ public class MenuUI : MonoBehaviour
         controlsText.GetComponent<TextMeshProUGUI>();
         topCtext.GetComponent<TextMeshProUGUI>();
         bottomCtext.GetComponent<TextMeshProUGUI>();
+
+        creditText.GetComponent<TextMeshProUGUI>();
 
         Color temp = fade.color;
         temp.a = 1f;
@@ -55,6 +59,8 @@ public class MenuUI : MonoBehaviour
         startGame.interactable = false;
         controls.interactable = false;
         tutorial.interactable = false;
+
+        creditText.text = "";
     }
 
     // Start is called before the first frame update
@@ -69,6 +75,8 @@ public class MenuUI : MonoBehaviour
         controls.interactable = false;
         tutorial.interactable = false;
 
+        creditText.text = "";
+
         tutorialClicked = true;
     }
 
@@ -77,6 +85,8 @@ public class MenuUI : MonoBehaviour
         startGame.interactable = false; //make buttons not clickable
         controls.interactable = false;
         tutorial.interactable = false;
+
+        creditText.text = "";
 
         asasas.clip = ambience;
         asasas.PlayOneShot(ambience, 0.2f);
@@ -89,6 +99,9 @@ public class MenuUI : MonoBehaviour
         startGame.interactable = false; //make buttons not clickable
         controls.interactable = false;
         tutorial.interactable = false;
+
+        creditText.text = "";
+
         controlsClicked = true;
         asasas.clip = clickSound;
         asasas.PlayOneShot(clickSound, 0.5f);
@@ -122,6 +135,12 @@ public class MenuUI : MonoBehaviour
                 startGame.interactable = true;
                 controls.interactable = true;
                 tutorial.interactable = true;
+
+                creditText.text = "Programming by: Geron Nevils\n" +
+                                  "        Art by: Jamey Putty,\n" +
+                                  "                Mark Scott,\n" +
+                                  "            and Oleksandr Linke";
+
                 fadingIn = false;
             }
         }
@@ -273,6 +292,11 @@ public class MenuUI : MonoBehaviour
                     startGame.interactable = true;
                     controls.interactable = true;
                     tutorial.interactable = true;
+
+                    creditText.text = "Programming by: Geron Nevils\n" +
+                                  "        Art by: Jamey Putty,\n" +
+                                  "                Mark Scott,\n" +
+                                  "            and Oleksandr Linke";
 
                     slide = 0;
                 }
